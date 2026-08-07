@@ -198,46 +198,6 @@ header.scrolled .phone-link{color:var(--ink)}
 .bubble.me{background:var(--ink);color:#fff;border-radius:16px 16px 5px 16px;margin-left:auto;max-width:82%}
 .stars{color:var(--brand-dark);letter-spacing:2px;font-size:.95rem;margin-top:12px}
 
-/* estimate form */
-.form-grid{display:grid;grid-template-columns:1fr 1.02fr;gap:52px;align-items:center;position:relative;z-index:2}
-.form-card{background:#fff;border-radius:24px;padding:30px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);color:var(--text)}
-.progress{display:flex;gap:6px;margin-bottom:20px}
-.progress i{flex:1;height:5px;border-radius:99px;background:var(--line);transition:background .4s}
-.progress i.on{background:var(--brand)}
-.fstep{display:none;animation:slideIn .4s cubic-bezier(.2,.8,.3,1)}
-.fstep.on{display:block}
-@keyframes slideIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
-.form-card h3{font-size:1.22rem;margin-bottom:3px}
-.form-card .sub{font-size:.86rem;color:var(--muted);margin-bottom:18px}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:.76rem;font-weight:800;margin-bottom:6px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.94rem;background:#FCFDFE;transition:border-color .25s,box-shadow .25s,background .25s}
-.field textarea{resize:vertical;min-height:78px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px rgba(245,179,1,.18)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{position:relative}
-.chip input{position:absolute;opacity:0;width:0;height:0}
-.chip span{display:block;padding:9px 15px;border:1.5px solid var(--line);border-radius:99px;font-size:.87rem;font-weight:700;cursor:pointer;transition:.25s;background:#FCFDFE}
-.chip input:checked+span{background:var(--brand);border-color:var(--brand);color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}
-.chip span:hover{border-color:var(--brand-dark)}
-.chip input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
-.upload{border:1.5px dashed var(--line-warm);border-radius:12px;padding:16px;text-align:center;background:var(--cream);font-size:.85rem;color:var(--muted);cursor:pointer;transition:.25s}
-.upload:hover{border-color:var(--brand);background:var(--cream-2)}
-.upload input{display:none}
-.form-nav{display:flex;gap:10px;margin-top:18px}
-.form-nav .btn{flex:1}
-.form-note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:12px}
-.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
-.form-ok{display:none;text-align:center;padding:30px 6px}
-.form-ok.show{display:block;animation:pop .5s cubic-bezier(.2,.8,.3,1)}
-@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
-.form-ok .tick{width:68px;height:68px;border-radius:50%;background:var(--brand);color:var(--ink);display:grid;place-items:center;margin:0 auto 16px;font-size:2rem;font-weight:800}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
-.blob.a{width:420px;height:420px;background:var(--brand);opacity:.2;top:-150px;right:-110px;animation:float 15s ease-in-out infinite}
-.blob.b{width:340px;height:340px;background:#2E9BE0;opacity:.18;bottom:-150px;left:-90px;animation:float 19s ease-in-out infinite reverse}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,28px)}}
-
 /* about */
 .about-wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:52px;align-items:center}
 .about-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);position:relative}
@@ -318,7 +278,7 @@ footer .logo{color:#fff;margin-bottom:14px}
 .skip:focus{left:0;top:0}
 
 @media(max-width:1020px){
-  .compare-wrap,.form-grid,.areas-wrap,.about-wrap{grid-template-columns:1fr;gap:36px}
+  .compare-wrap,.areas-wrap,.about-wrap{grid-template-columns:1fr;gap:36px}
   .foot-grid{grid-template-columns:1fr 1fr}
   .step::before{display:none}
 }
@@ -685,111 +645,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   </div>
 </section>
 
-<!-- ============ ESTIMATE FORM ============ -->
-<section class="section section--navy" id="estimate" style="position:relative;overflow:hidden">
-  <span class="blob a"></span><span class="blob b"></span>
-  <div class="wrap form-grid">
-    <div class="reveal">
-      <span class="eyebrow eyebrow--light">Free estimate</span>
-      <h2 class="display">Find out what your cleaning would cost</h2>
-      <p class="lead">Answer a few quick questions and we will send you a written estimate — free, with no obligation. We reply by text message or email, whichever you prefer, Monday through Saturday between 7 AM and 7 PM.</p>
-      <div class="hero-badges" style="margin-top:26px">
-        <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> No obligation, no pressure</span>
-        <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> We never share your information</span>
-      </div>
-      <p style="margin-top:26px;color:rgba(255,255,255,.85);font-size:.95rem">Prefer to talk? Call <a href="tel:+12393005332" style="color:var(--brand);font-weight:800">(239) 300-5332</a> or <a href="tel:+12392856103" style="color:var(--brand);font-weight:800">(239) 285-6103</a>.</p>
-    </div>
-
-    <div class="form-card reveal" data-d="1">
-      <form id="qform" novalidate>
-        <div class="progress"><i class="on"></i><i></i><i></i></div>
-
-        <div class="fstep on" data-step="1">
-          <h3>What can we clean for you?</h3>
-          <p class="sub">Step 1 of 3 · about 60 seconds</p>
-          <div class="field">
-            <label>Type of service</label>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="svc" value="Home or apartment" checked><span>Home or apartment</span></label>
-              <label class="chip"><input type="radio" name="svc" value="Airbnb / rental turnover"><span>Airbnb / rental</span></label>
-              <label class="chip"><input type="radio" name="svc" value="Office"><span>Office</span></label>
-              <label class="chip"><input type="radio" name="svc" value="Move-in / move-out"><span>Move in / out</span></label>
-              <label class="chip"><input type="radio" name="svc" value="Post-remodel or construction"><span>Remodel / construction</span></label>
-              <label class="chip"><input type="radio" name="svc" value="HOA / community"><span>HOA / community</span></label>
-            </div>
-          </div>
-          <div class="field">
-            <label>How often?</label>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="freq" value="Weekly"><span>Weekly</span></label>
-              <label class="chip"><input type="radio" name="freq" value="Every 2 weeks" checked><span>Every 2 weeks</span></label>
-              <label class="chip"><input type="radio" name="freq" value="Monthly"><span>Monthly</span></label>
-              <label class="chip"><input type="radio" name="freq" value="One time"><span>One time</span></label>
-              <label class="chip"><input type="radio" name="freq" value="Per turnover"><span>Per turnover</span></label>
-            </div>
-          </div>
-          <div class="form-nav"><button type="button" class="btn btn--brand" data-go="2">Continue →</button></div>
-        </div>
-
-        <div class="fstep" data-step="2">
-          <h3>Tell us about the property</h3>
-          <p class="sub">Step 2 of 3 · approximate numbers are fine</p>
-          <div class="row2">
-            <div class="field"><label>Bedrooms</label><select name="bed"><option>Studio</option><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5 or more</option><option>Not applicable</option></select></div>
-            <div class="field"><label>Bathrooms</label><select name="bath"><option>1</option><option selected>2</option><option>3</option><option>4 or more</option><option>Not applicable</option></select></div>
-          </div>
-          <div class="field"><label>Approximate square feet</label><input type="text" name="sqft" placeholder="e.g. 1,800" inputmode="numeric"></div>
-          <div class="field">
-            <label>Photos of the space (optional)</label>
-            <label class="upload" id="upl">
-              <input type="file" multiple accept="image/*" id="uplin" name="photos">
-              <span id="upltxt">📷 Tap to attach photos — this often lets us quote without a visit</span>
-            </label>
-          </div>
-          <div class="form-nav">
-            <button type="button" class="btn btn--outline" data-go="1">← Back</button>
-            <button type="button" class="btn btn--brand" data-go="3">Continue →</button>
-          </div>
-        </div>
-
-        <div class="fstep" data-step="3">
-          <h3>Where should we send it?</h3>
-          <p class="sub">Step 3 of 3 · we reply within business hours</p>
-          <div class="row2">
-            <div class="field"><label>Full name</label><input type="text" name="name" required placeholder="Jane Doe"></div>
-            <div class="field"><label>Phone</label><input type="tel" name="phone" required placeholder="(239) 000-0000"></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com"></div>
-            <div class="field"><label>City</label><select name="city"><option>Naples</option><option>Fort Myers</option><option>Cape Coral</option><option>Marco Island</option><option>Estero</option><option>Golden Gate Estates</option><option>Punta Gorda</option><option>Other</option></select></div>
-          </div>
-          <div class="field">
-            <label>How should we reply?</label>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="reply" value="Text message" checked><span>Text message</span></label>
-              <label class="chip"><input type="radio" name="reply" value="Email"><span>Email</span></label>
-              <label class="chip"><input type="radio" name="reply" value="Phone call"><span>Phone call</span></label>
-            </div>
-          </div>
-          <div class="field"><label>Anything we should know? (optional)</label><textarea name="notes" placeholder="Pets at home, preferred day, products you would like us to use..."></textarea></div>
-          <input type="text" name="company_website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="form-nav">
-            <button type="button" class="btn btn--outline" data-go="2">← Back</button>
-            <button type="submit" class="btn btn--brand">Send my free estimate request</button>
-          </div>
-          <p class="form-note">By submitting this form you agree to be contacted about your estimate. We never sell or share your information.</p>
-        </div>
-      </form>
-
-      <div class="form-ok" id="qok">
-        <div class="tick">✓</div>
-        <h3>Thank you — we have your request</h3>
-        <p class="sub" style="margin-top:8px">We will send your free written estimate to the contact method you chose, Monday through Saturday between 7 AM and 7 PM. If it is urgent, call us at (239) 300-5332.</p>
-        <p class="form-note" style="margin-top:14px">Demo form — this page is not yet connected to an email service, so nothing was sent.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ FAQ ============ -->
 <section class="section" id="faq">
@@ -991,31 +846,6 @@ footer .logo{color:#fff;margin-bottom:14px}
     dio.observe(cmp);
   }
 
-  /* multi-step form */
-  var form=document.getElementById('qform');
-  var steps=form.querySelectorAll('.fstep');
-  var bars=form.querySelectorAll('.progress i');
-  function goTo(n){
-    steps.forEach(function(s){ s.classList.toggle('on', s.dataset.step===String(n)); });
-    bars.forEach(function(b,i){ b.classList.toggle('on', i<n); });
-    form.parentElement.scrollIntoView({behavior:'smooth',block:'center'});
-  }
-  form.querySelectorAll('[data-go]').forEach(function(b){
-    b.addEventListener('click',function(){ goTo(parseInt(b.dataset.go,10)); });
-  });
-  var uplin=document.getElementById('uplin'), upltxt=document.getElementById('upltxt');
-  uplin.addEventListener('change',function(){
-    var n=uplin.files.length;
-    upltxt.textContent = n ? '✓ '+n+' photo'+(n>1?'s':'')+' attached' : '📷 Tap to attach photos — this often lets us quote without a visit';
-  });
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(form.company_website.value) return;              /* honeypot: silent drop */
-    var req=form.querySelectorAll('.fstep[data-step="3"] [required]');
-    for(var i=0;i<req.length;i++){ if(!req[i].value.trim()){ req[i].focus(); req[i].style.borderColor='#E5484D'; return; } }
-    form.style.display='none';
-    document.getElementById('qok').classList.add('show');
-  });
 
   /* newsletter demo */
   document.getElementById('newsform').addEventListener('submit',function(e){
@@ -1031,11 +861,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   document.getElementById('ckYes').addEventListener('click',function(){ writeCk('all'); ck.classList.remove('show'); });
   document.getElementById('ckNo').addEventListener('click',function(){ writeCk('essential'); ck.classList.remove('show'); });
 
-  /* service card -> estimate */
-  document.querySelectorAll('.card').forEach(function(c){
-    c.style.cursor='pointer';
-    c.addEventListener('click',function(){ document.getElementById('estimate').scrollIntoView({behavior:'smooth'}); });
-  });
 
   /* button glow */
   document.querySelectorAll('.btn').forEach(function(b){
