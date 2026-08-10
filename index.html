@@ -867,9 +867,10 @@ footer .logo{color:#fff;margin-bottom:14px}
 
 /* GSAP animations - executed after GSAP loads */
 window.addEventListener('load', function(){
-  if(typeof gsap === 'undefined') return;
+  setTimeout(function(){
+    if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
   /* enhanced scroll reveal con GSAP */
   document.querySelectorAll('.reveal').forEach(function(el){
@@ -928,6 +929,7 @@ window.addEventListener('load', function(){
       ease: 'none'
     });
   }
+  }, 100); // end setTimeout
 });
 </script>
 </body>
