@@ -180,8 +180,9 @@ header.scrolled .phone-link{color:var(--ink)}
 /* areas */
 .areas-wrap{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
 .area-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-top:26px}
-.area{background:#fff;border:1px solid var(--line-warm);border-radius:13px;padding:13px 16px;font-weight:700;font-size:.94rem;display:flex;align-items:center;gap:9px;transition:transform .3s,border-color .3s,box-shadow .3s}
+.area{background:#fff;border:1px solid var(--line-warm);border-radius:13px;padding:13px 16px;font-weight:700;font-size:.94rem;display:flex;align-items:center;gap:9px;transition:transform .3s,border-color .3s,box-shadow .3s,background-color .3s;cursor:pointer}
 .area:hover{transform:translateY(-4px);border-color:var(--brand);box-shadow:var(--shadow)}
+.area.active{background:var(--brand);color:#fff;border-color:var(--brand)}.area.active svg{fill:#fff}
 .area svg{width:17px;height:17px;fill:var(--brand-dark);flex:none}
 .map-box{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);border:6px solid #fff;background:var(--cream-2);min-height:340px;position:relative}
 .map-box iframe{width:100%;height:100%;min-height:330px;border:0;display:block}
@@ -619,13 +620,13 @@ footer .logo{color:#fff;margin-bottom:14px}
       <h2 class="display">Cleaning across Southwest Florida</h2>
       <p class="lead">Our crews cover Collier, Lee and Charlotte counties from our base in Naples. If your city is not on the list, call us anyway — we often make exceptions for larger properties and recurring work.</p>
       <div class="area-grid">
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Naples</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Fort Myers</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Cape Coral</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Marco Island</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Estero</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Golden Gate Estates</div>
-        <div class="area"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Punta Gorda</div>
+        <div class="area" data-city="Naples" data-query="Naples,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Naples</div>
+        <div class="area" data-city="Fort Myers" data-query="Fort+Myers,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Fort Myers</div>
+        <div class="area" data-city="Cape Coral" data-query="Cape+Coral,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Cape Coral</div>
+        <div class="area" data-city="Marco Island" data-query="Marco+Island,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Marco Island</div>
+        <div class="area" data-city="Estero" data-query="Estero,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Estero</div>
+        <div class="area" data-city="Golden Gate Estates" data-query="Golden+Gate+Estates,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Golden Gate Estates</div>
+        <div class="area" data-city="Punta Gorda" data-query="Punta+Gorda,+FL"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> Punta Gorda</div>
       </div>
     </div>
     <div class="map-box reveal" data-d="1">
@@ -923,6 +924,21 @@ footer .logo{color:#fff;margin-bottom:14px}
   document.querySelectorAll('.card').forEach(function(c){
     c.style.cursor='pointer';
     c.addEventListener('click',function(){ document.getElementById('estimate').scrollIntoView({behavior:'smooth'}); });
+  });
+
+  /* area cards -> map */
+  var mapBox=document.querySelector('.map-box iframe');
+  document.querySelectorAll('.area').forEach(function(a){
+    a.addEventListener('click',function(){
+      var query=a.getAttribute('data-query');
+      var city=a.getAttribute('data-city');
+      if(query && mapBox){
+        mapBox.src='https://www.google.com/maps?q='+query+'&output=embed';
+        document.querySelectorAll('.area').forEach(function(x){ x.classList.remove('active'); });
+        a.classList.add('active');
+        setTimeout(function(){ document.getElementById('areas').scrollIntoView({behavior:'smooth'}); }, 100);
+      }
+    });
   });
 
   /* button glow */
