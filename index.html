@@ -845,16 +845,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   document.getElementById('ckNo').addEventListener('click',function(){ writeCk('essential'); ck.classList.remove('show'); });
 
 
-  /* enhanced hover en tarjetas */
-  document.querySelectorAll('.card, .promise, .phone-card').forEach(function(el){
-    el.addEventListener('mouseenter', function(){
-      gsap.to(el, { duration: 0.3, y: -12, boxShadow: '0 34px 80px -20px rgba(18,38,63,.5)', ease: 'power2.out' });
-    });
-    el.addEventListener('mouseleave', function(){
-      gsap.to(el, { duration: 0.3, y: 0, boxShadow: 'var(--shadow)', ease: 'power2.out' });
-    });
-  });
-
   /* button glow */
   document.querySelectorAll('.btn').forEach(function(b){
     b.addEventListener('pointermove',function(e){
@@ -863,22 +853,6 @@ footer .logo{color:#fff;margin-bottom:14px}
       b.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
     });
   });
-
-  /* parallax hero */
-  var heroBg = document.querySelector('.hero-bg img');
-  if(heroBg){
-    gsap.to(heroBg, {
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.5,
-        markers: false
-      },
-      y: 100,
-      ease: 'none'
-    });
-  }
 
   /* image fallback */
   document.querySelectorAll('img').forEach(function(img){
