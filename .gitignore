@@ -1,0 +1,24 @@
+# Claude Code local files
+.claude/
+skills/
+*.zip
+
+# Node/npm
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Env
+.env
+.env.local
