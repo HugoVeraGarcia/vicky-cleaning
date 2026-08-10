@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
 :root{
   --brand:#F5B301;          /* logo yellow */
@@ -950,6 +951,14 @@ footer .logo{color:#fff;margin-bottom:14px}
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 })();
+
+/* GSAP animations */
+if(typeof gsap !== 'undefined'){
+  document.querySelectorAll('.card, .promise, .phone-card').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ gsap.to(el, { duration: 0.3, y: -12, boxShadow: '0 34px 80px -20px rgba(18,38,63,.5)', ease: 'power2.out' }); });
+    el.addEventListener('mouseleave', function(){ gsap.to(el, { duration: 0.3, y: 0, boxShadow: 'var(--shadow)', ease: 'power2.out' }); });
+  });
+}
 </script>
 </body>
 </html>
