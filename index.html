@@ -927,16 +927,15 @@ footer .logo{color:#fff;margin-bottom:14px}
   });
 
   /* area cards -> map */
-  var mapBox=document.querySelector('.map-box iframe');
   document.querySelectorAll('.area').forEach(function(a){
     a.addEventListener('click',function(){
       var query=a.getAttribute('data-query');
-      var city=a.getAttribute('data-city');
+      var mapBox=document.querySelector('.map-box iframe');
       if(query && mapBox){
         mapBox.src='https://www.google.com/maps?q='+query+'&output=embed';
         document.querySelectorAll('.area').forEach(function(x){ x.classList.remove('active'); });
         a.classList.add('active');
-        setTimeout(function(){ document.getElementById('areas').scrollIntoView({behavior:'smooth'}); }, 100);
+        document.getElementById('areas').scrollIntoView({behavior:'smooth'});
       }
     });
   });
@@ -958,7 +957,7 @@ footer .logo{color:#fff;margin-bottom:14px}
     });
   });
 
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  try{ document.getElementById('yr').textContent = new Date().getFullYear(); }catch(e){}
 })();
 
 /* GSAP animations */
