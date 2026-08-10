@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
 :root{
   --brand:#F5B301;          /* logo yellow */
@@ -793,23 +795,40 @@ footer .logo{color:#fff;margin-bottom:14px}
   }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
-  /* scroll reveal */
-  var io=new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  /* GSAP ScrollTrigger setup */
+  gsap.registerPlugin(ScrollTrigger);
 
-  /* counters */
-  var cio=new IntersectionObserver(function(en){
-    en.forEach(function(e){
-      if(!e.isIntersecting) return;
-      var el=e.target, to=parseInt(el.dataset.to,10), t0=null;
-      function tick(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1400,1); var k=1-Math.pow(1-p,3);
-        el.textContent=Math.round(to*k).toLocaleString('en-US'); if(p<1)requestAnimationFrame(tick); }
-      requestAnimationFrame(tick); cio.unobserve(el);
+  /* enhanced scroll reveal con GSAP */
+  document.querySelectorAll('.reveal').forEach(function(el){
+    gsap.from(el, {
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      duration: 0.8,
+      opacity: 0,
+      y: 30,
+      ease: 'cubic-bezier(0.2, 0.8, 0.3, 1)'
     });
-  },{threshold:.5});
-  document.querySelectorAll('.count').forEach(function(el){ cio.observe(el); });
+  });
+
+  /* counters con GSAP */
+  document.querySelectorAll('.count').forEach(function(el){
+    var to=parseInt(el.dataset.to,10);
+    gsap.to(el, {
+      scrollTrigger: {
+        trigger: el.parentElement,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      duration: 1.4,
+      textContent: to,
+      snap: { textContent: 1 },
+      ease: 'power3.out',
+      onUpdate: function(){ el.textContent=Math.round(gsap.getProperty(el, 'textContent')).toLocaleString('en-US'); }
+    });
+  });
 
   /* marquee */
   var cities=['Naples','Fort Myers','Cape Coral','Marco Island','Estero','Golden Gate Estates','Punta Gorda','Bonita Springs area','Immokalee area','Lehigh Acres area'];
@@ -861,6 +880,16 @@ footer .logo{color:#fff;margin-bottom:14px}
   document.getElementById('ckNo').addEventListener('click',function(){ writeCk('essential'); ck.classList.remove('show'); });
 
 
+  /* enhanced hover en tarjetas */
+  document.querySelectorAll('.card, .promise, .phone-card').forEach(function(el){
+    el.addEventListener('mouseenter', function(){
+      gsap.to(el, { duration: 0.3, y: -12, boxShadow: '0 34px 80px -20px rgba(18,38,63,.5)', ease: 'power2.out' });
+    });
+    el.addEventListener('mouseleave', function(){
+      gsap.to(el, { duration: 0.3, y: 0, boxShadow: 'var(--shadow)', ease: 'power2.out' });
+    });
+  });
+
   /* button glow */
   document.querySelectorAll('.btn').forEach(function(b){
     b.addEventListener('pointermove',function(e){
@@ -869,6 +898,22 @@ footer .logo{color:#fff;margin-bottom:14px}
       b.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
     });
   });
+
+  /* parallax hero */
+  var heroBg = document.querySelector('.hero-bg img');
+  if(heroBg){
+    gsap.to(heroBg, {
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+        markers: false
+      },
+      y: 100,
+      ease: 'none'
+    });
+  }
 
   /* image fallback */
   document.querySelectorAll('img').forEach(function(img){
