@@ -13,7 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
 :root{
   --brand:#F5B301;          /* logo yellow */
@@ -199,6 +198,46 @@ header.scrolled .phone-link{color:var(--ink)}
 .bubble.me{background:var(--ink);color:#fff;border-radius:16px 16px 5px 16px;margin-left:auto;max-width:82%}
 .stars{color:var(--brand-dark);letter-spacing:2px;font-size:.95rem;margin-top:12px}
 
+/* estimate form */
+.form-grid{display:grid;grid-template-columns:1fr 1.02fr;gap:52px;align-items:center;position:relative;z-index:2}
+.form-card{background:#fff;border-radius:24px;padding:30px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);color:var(--text)}
+.progress{display:flex;gap:6px;margin-bottom:20px}
+.progress i{flex:1;height:5px;border-radius:99px;background:var(--line);transition:background .4s}
+.progress i.on{background:var(--brand)}
+.fstep{display:none;animation:slideIn .4s cubic-bezier(.2,.8,.3,1)}
+.fstep.on{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.form-card h3{font-size:1.22rem;margin-bottom:3px}
+.form-card .sub{font-size:.86rem;color:var(--muted);margin-bottom:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.76rem;font-weight:800;margin-bottom:6px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.94rem;background:#FCFDFE;transition:border-color .25s,box-shadow .25s,background .25s}
+.field textarea{resize:vertical;min-height:78px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px rgba(245,179,1,.18)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:0;height:0}
+.chip span{display:block;padding:9px 15px;border:1.5px solid var(--line);border-radius:99px;font-size:.87rem;font-weight:700;cursor:pointer;transition:.25s;background:#FCFDFE}
+.chip input:checked+span{background:var(--brand);border-color:var(--brand);color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}
+.chip span:hover{border-color:var(--brand-dark)}
+.chip input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+.upload{border:1.5px dashed var(--line-warm);border-radius:12px;padding:16px;text-align:center;background:var(--cream);font-size:.85rem;color:var(--muted);cursor:pointer;transition:.25s}
+.upload:hover{border-color:var(--brand);background:var(--cream-2)}
+.upload input{display:none}
+.form-nav{display:flex;gap:10px;margin-top:18px}
+.form-nav .btn{flex:1}
+.form-note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:12px}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.form-ok{display:none;text-align:center;padding:30px 6px}
+.form-ok.show{display:block;animation:pop .5s cubic-bezier(.2,.8,.3,1)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.form-ok .tick{width:68px;height:68px;border-radius:50%;background:var(--brand);color:var(--ink);display:grid;place-items:center;margin:0 auto 16px;font-size:2rem;font-weight:800}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob.a{width:420px;height:420px;background:var(--brand);opacity:.2;top:-150px;right:-110px;animation:float 15s ease-in-out infinite}
+.blob.b{width:340px;height:340px;background:#2E9BE0;opacity:.18;bottom:-150px;left:-90px;animation:float 19s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,28px)}}
+
 /* about */
 .about-wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:52px;align-items:center}
 .about-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);position:relative}
@@ -279,7 +318,7 @@ footer .logo{color:#fff;margin-bottom:14px}
 .skip:focus{left:0;top:0}
 
 @media(max-width:1020px){
-  .compare-wrap,.areas-wrap,.about-wrap{grid-template-columns:1fr;gap:36px}
+  .compare-wrap,.form-grid,.areas-wrap,.about-wrap{grid-template-columns:1fr;gap:36px}
   .foot-grid{grid-template-columns:1fr 1fr}
   .step::before{display:none}
 }
@@ -345,10 +384,10 @@ footer .logo{color:#fff;margin-bottom:14px}
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
-      <span class="phone-link">
+      <a href="tel:+12393005332" class="phone-link" aria-label="Call (239) 300-5332">
         <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
         <b>(239) 300-5332</b>
-      </span>
+      </a>
       <a href="#estimate" class="btn btn--brand"><span class="lbl-lg">Free Estimate</span><span class="lbl-sm">Estimate</span></a>
     </div>
   </div>
@@ -368,10 +407,10 @@ footer .logo{color:#fff;margin-bottom:14px}
         Request your free estimate
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <span class="btn btn--ghost" style="cursor:default">
+      <a href="tel:+12393005332" class="btn btn--ghost">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
         Call (239) 300-5332
-      </span>
+      </a>
     </div>
     <div class="hero-badges fade-up d4">
       <span><svg viewBox="0 0 24 24"><path d="M12 2l7 3v6c0 4.4-3 8.4-7 9.5C8 19.4 5 15.4 5 11V5l7-3zm-1 13l6-6-1.4-1.4L11 12.2 8.4 9.6 7 11l4 4z"/></svg> Workers' comp &amp; liability insured</span>
@@ -646,7 +685,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   </div>
 </section>
 
-
 <!-- ============ FAQ ============ -->
 <section class="section" id="faq">
   <div class="wrap">
@@ -673,10 +711,10 @@ footer .logo{color:#fff;margin-bottom:14px}
     <p class="reveal" data-d="1">Request your free estimate today. No visit required, no obligation, and an honest price before we start.</p>
     <div class="btns reveal" data-d="2">
       <a href="#estimate" class="btn btn--navy">Get my free estimate</a>
-      <span class="btn btn--outline" style="cursor:default">
+      <a href="tel:+12393005332" class="btn btn--outline">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
         (239) 300-5332
-      </span>
+      </a>
     </div>
   </div>
 </section>
@@ -695,6 +733,7 @@ footer .logo{color:#fff;margin-bottom:14px}
         <div class="socials">
           <a href="https://www.tiktok.com/@vickycleaning239" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.8a4.3 4.3 0 01-1-2.8h-3v12a2.6 2.6 0 11-1.9-2.5V9.4a5.6 5.6 0 105.5 5.6V9.7a7.3 7.3 0 004.3 1.4V8.1a4.3 4.3 0 01-3.9-2.3z"/></svg></a>
           <a href="mailto:Viky1912@hotmail.com" aria-label="Email us"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+          <a href="tel:+12393005332" aria-label="Call us"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg></a>
         </div>
       </div>
       <div><h4>Services</h4><ul>
@@ -714,7 +753,7 @@ footer .logo{color:#fff;margin-bottom:14px}
       </ul></div>
       <div><h4>Contact</h4>
         <ul class="foot-contact">
-          <li><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg><span>(239) 300-5332<br>(239) 285-6103</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg><span><a href="tel:+12393005332">(239) 300-5332</a><br><a href="tel:+12392856103">(239) 285-6103</a></span></li>
           <li><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><a href="mailto:Viky1912@hotmail.com">Viky1912@hotmail.com</a></li>
           <li><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg><span>3845 Beck Blvd, Suite 828R<br>Naples, FL 34114</span></li>
           <li><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.6V6h-2v7.4l5.3 3.2 1-1.7-4.3-2.3z"/></svg><span>Monday – Saturday<br>7:00 AM – 7:00 PM</span></li>
@@ -731,11 +770,11 @@ footer .logo{color:#fff;margin-bottom:14px}
 </footer>
 
 <div class="fabs" id="fabs">
-  <a href="https://wa.me/51995257660?text=Hello%2C%20I%20would%20like%20a%20free%20cleaning%20estimate." target="_blank" rel="noopener" class="fab fab--wa" aria-label="WhatsApp us">
+  <a href="https://wa.me/12393005332?text=Hello%2C%20I%20would%20like%20a%20free%20cleaning%20estimate." target="_blank" rel="noopener" class="fab fab--wa" aria-label="WhatsApp us">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.5 14.2c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.4-.3.3c-.1.1-.2.2-.1.5.2.3.7 1.2 1.5 1.9 1 .9 1.8 1.1 2.1 1.3.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.3z"/></svg>
     <span>WhatsApp</span>
   </a>
-  <a href="sms:+51995257660" class="fab fab--txt" aria-label="Text us">
+  <a href="sms:+12393005332" class="fab fab--txt" aria-label="Text us">
     <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2zM7 9h10v2H7V9zm0 4h7v2H7v-2z"/></svg>
     <span>Text us</span>
   </a>
@@ -756,7 +795,7 @@ footer .logo{color:#fff;margin-bottom:14px}
   "@type":"HouseholdCleaningService",
   "name":"Vicky's Cleaning with a Smile and More",
   "description":"Family-owned residential and commercial cleaning company serving Southwest Florida for over 17 years. Licensed and insured. Free estimates.",
-  "telephone":"+51-995-257-660",
+  "telephone":"+1-239-300-5332",
   "email":"Viky1912@hotmail.com",
   "foundingDate":"2009",
   "address":{"@type":"PostalAddress","streetAddress":"3845 Beck Blvd, Suite 828R","addressLocality":"Naples","addressRegion":"FL","postalCode":"34114","addressCountry":"US"},
@@ -794,6 +833,24 @@ footer .logo{color:#fff;margin-bottom:14px}
   }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
+  /* scroll reveal */
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* counters */
+  var cio=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el=e.target, to=parseInt(el.dataset.to,10), t0=null;
+      function tick(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1400,1); var k=1-Math.pow(1-p,3);
+        el.textContent=Math.round(to*k).toLocaleString('en-US'); if(p<1)requestAnimationFrame(tick); }
+      requestAnimationFrame(tick); cio.unobserve(el);
+    });
+  },{threshold:.5});
+  document.querySelectorAll('.count').forEach(function(el){ cio.observe(el); });
+
   /* marquee */
   var cities=['Naples','Fort Myers','Cape Coral','Marco Island','Estero','Golden Gate Estates','Punta Gorda','Bonita Springs area','Immokalee area','Lehigh Acres area'];
   var t=document.getElementById('mq');
@@ -828,6 +885,31 @@ footer .logo{color:#fff;margin-bottom:14px}
     dio.observe(cmp);
   }
 
+  /* multi-step form */
+  var form=document.getElementById('qform');
+  var steps=form.querySelectorAll('.fstep');
+  var bars=form.querySelectorAll('.progress i');
+  function goTo(n){
+    steps.forEach(function(s){ s.classList.toggle('on', s.dataset.step===String(n)); });
+    bars.forEach(function(b,i){ b.classList.toggle('on', i<n); });
+    form.parentElement.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  form.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click',function(){ goTo(parseInt(b.dataset.go,10)); });
+  });
+  var uplin=document.getElementById('uplin'), upltxt=document.getElementById('upltxt');
+  uplin.addEventListener('change',function(){
+    var n=uplin.files.length;
+    upltxt.textContent = n ? '✓ '+n+' photo'+(n>1?'s':'')+' attached' : '📷 Tap to attach photos — this often lets us quote without a visit';
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.company_website.value) return;              /* honeypot: silent drop */
+    var req=form.querySelectorAll('.fstep[data-step="3"] [required]');
+    for(var i=0;i<req.length;i++){ if(!req[i].value.trim()){ req[i].focus(); req[i].style.borderColor='#E5484D'; return; } }
+    form.style.display='none';
+    document.getElementById('qok').classList.add('show');
+  });
 
   /* newsletter demo */
   document.getElementById('newsform').addEventListener('submit',function(e){
@@ -843,6 +925,11 @@ footer .logo{color:#fff;margin-bottom:14px}
   document.getElementById('ckYes').addEventListener('click',function(){ writeCk('all'); ck.classList.remove('show'); });
   document.getElementById('ckNo').addEventListener('click',function(){ writeCk('essential'); ck.classList.remove('show'); });
 
+  /* service card -> estimate */
+  document.querySelectorAll('.card').forEach(function(c){
+    c.style.cursor='pointer';
+    c.addEventListener('click',function(){ document.getElementById('estimate').scrollIntoView({behavior:'smooth'}); });
+  });
 
   /* button glow */
   document.querySelectorAll('.btn').forEach(function(b){
@@ -863,15 +950,6 @@ footer .logo{color:#fff;margin-bottom:14px}
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 })();
-
-/* GSAP animations */
-if(typeof gsap !== 'undefined'){
-  /* hover mejorado en tarjetas */
-  document.querySelectorAll('.card, .promise, .phone-card').forEach(function(el){
-    el.addEventListener('mouseenter', function(){ gsap.to(el, { duration: 0.3, y: -12, boxShadow: '0 34px 80px -20px rgba(18,38,63,.5)', ease: 'power2.out' }); });
-    el.addEventListener('mouseleave', function(){ gsap.to(el, { duration: 0.3, y: 0, boxShadow: 'var(--shadow)', ease: 'power2.out' }); });
-  });
-}
 </script>
 </body>
 </html>
