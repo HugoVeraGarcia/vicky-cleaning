@@ -305,10 +305,10 @@ footer .logo{color:#fff;margin-bottom:14px}
 /* modals */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:999}
 .modal.show{display:flex}
-.modal-content{background:#fff;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center}
+.modal-content{position:relative;background:#fff;padding:44px 56px;border-radius:20px;max-width:min(720px,92vw);width:auto;text-align:center}
 .modal-content h3{font-size:1.2rem;margin-bottom:20px;color:var(--ink)}
-.modal-content .data{font-size:2.5rem;font-weight:800;color:var(--brand);margin:30px 0;word-break:break-all;font-family:monospace}
-.modal-content .close{float:right;font-size:28px;font-weight:bold;cursor:pointer;color:var(--muted)}
+.modal-content .data{font-size:clamp(1.05rem,3.6vw,2.1rem);font-weight:800;color:var(--brand);margin:26px 0 6px;font-family:monospace;white-space:nowrap;user-select:all}
+.modal-content .close{position:absolute;top:12px;right:20px;font-size:28px;line-height:1;font-weight:bold;cursor:pointer;color:var(--muted)}
 .modal-content .close:hover{color:var(--ink)}
 
 /* cookies */
