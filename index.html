@@ -965,6 +965,21 @@ footer .logo{color:#fff;margin-bottom:14px}
   });
 
   try{ document.getElementById('yr').textContent = new Date().getFullYear(); }catch(e){}
+
+  /* modals */
+  var isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if(!isMobile){
+    var emailModal = document.getElementById('email-modal');
+    var phoneModal = document.getElementById('phone-modal');
+    if(emailModal && phoneModal){
+      document.getElementById('email-btn').addEventListener('click', function(){ emailModal.classList.add('show'); });
+      document.getElementById('phone-btn').addEventListener('click', function(){ phoneModal.classList.add('show'); });
+      var phoneFooter = document.getElementById('phone-footer');
+      if(phoneFooter) phoneFooter.addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
+      document.querySelectorAll('.modal .close').forEach(function(btn){ btn.addEventListener('click', function(){ this.closest('.modal').classList.remove('show'); }.bind(btn)); });
+      window.addEventListener('click', function(e){ if(e.target.classList.contains('modal')) e.target.classList.remove('show'); });
+    }
+  }
 })();
 
 /* GSAP animations */
@@ -973,21 +988,6 @@ if(typeof gsap !== 'undefined'){
     el.addEventListener('mouseenter', function(){ gsap.to(el, { duration: 0.3, y: -12, boxShadow: '0 34px 80px -20px rgba(18,38,63,.5)', ease: 'power2.out' }); });
     el.addEventListener('mouseleave', function(){ gsap.to(el, { duration: 0.3, y: 0, boxShadow: 'var(--shadow)', ease: 'power2.out' }); });
   });
-}
-
-/* modals */
-var isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-if(!isMobile){
-  var emailModal = document.getElementById('email-modal');
-  var phoneModal = document.getElementById('phone-modal');
-  if(emailModal && phoneModal){
-    document.getElementById('email-btn').addEventListener('click', function(e){ e.preventDefault(); emailModal.classList.add('show'); });
-    document.getElementById('phone-btn').addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
-    var phoneFooter = document.getElementById('phone-footer');
-    if(phoneFooter) phoneFooter.addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
-    document.querySelectorAll('.modal .close').forEach(function(btn){ btn.addEventListener('click', function(){ this.closest('.modal').classList.remove('show'); }.bind(btn)); });
-    window.addEventListener('click', function(e){ if(e.target.classList.contains('modal')) e.target.classList.remove('show'); });
-  }
 }
 </script>
 </body>
