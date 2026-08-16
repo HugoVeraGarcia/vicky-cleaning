@@ -32,8 +32,8 @@ El correo es Viky1912@hotmail.com — con una sola k. Es correcto.
 
 - Abrir en 390px y en 1440px y revisar que no haya scroll horizontal.
 - Consola sin errores.
-- Probar el formulario de los tres pasos hasta el final.
-- Recorrer con teclado desde el primer enlace hasta el botón de enviar.
+- Recorrer todo el sitio con teclado, de principio a fin.
+- Al borrar markup, borrar también el JS y el CSS que lo acompañaban.
 
 ## Flujo de trabajo
 

@@ -106,33 +106,42 @@ Todas en Collier, Lee y Charlotte County. La marquesina incluye además tres zon
 
 ## 3. Estado actual del código
 
+> ⚠️ Estado a **12 de agosto de 2026**. El formulario de presupuesto, la banda de
+> botones y el alta de newsletter se retiraron del sitio; varios requisitos de la
+> sección 6 quedaron en suspenso por ello. Ver 3.6.
+
 ### 3.1 Qué hay
 
-Un único archivo `index.html` (~73 KB, ~1.800 líneas) autocontenido: HTML + CSS en `<style>` + JS en `<script>`. Sin dependencias, sin build, sin `node_modules`.
+Un único archivo `index.html` (~64 KB, ~970 líneas) autocontenido: HTML + CSS en `<style>` + JS en `<script>`. Sin build ni `node_modules`. Junto a él, una carpeta `images/` con las fotografías servidas desde el propio dominio y `videos/`, hoy sin uso en la página.
+
+Única dependencia en tiempo de ejecución además de las fuentes: **GSAP 3.12.2** por CDN, usada solo para la animación de las tarjetas al pasar el cursor.
 
 ### 3.2 Estructura del documento, en orden
 
 | # | Sección | Ancla / ID | Notas |
 |---|---|---|---|
 | 1 | Top bar | `#topbar` | Zonas + horario. Se oculta al hacer scroll > 50px |
-| 2 | Header | `#hdr` | Fijo. Gana `.scrolled` a > 50px |
-| 3 | Hero | — | Imagen de fondo con Ken Burns, h1, 2 CTA, 3 badges |
+| 2 | Header | `#hdr` | Fijo. Gana `.scrolled` a > 50px. Logo + menú + teléfono |
+| 3 | Hero | — | Imagen de fondo con Ken Burns, h1, párrafo, 3 badges. **Sin CTA** |
 | 4 | Stats | `.stats` | 4 contadores animados (`.count[data-to]`) |
-| 5 | Servicios | `#services` | 8 tarjetas |
+| 5 | Servicios | `#services` | 8 tarjetas. Ya no son pulsables |
 | 6 | Marquesina | `#mq` | Ciudades, inyectadas por JS |
 | 7 | Promises | — | 4 tarjetas = las 4 objeciones |
 | 8 | Antes / después | `#cmp`, `#hnd` | Deslizador arrastrable |
 | 9 | Cómo funciona | `#how` | 4 pasos |
-| 10 | Zonas | `#areas` | Rejilla + iframe de Google Maps |
+| 10 | Zonas | `#areas` | Rejilla + iframe de Google Maps. Cada `.area[data-query]` recarga el mapa en esa ciudad |
 | 11 | Reseñas | `#reviews` | 3 tarjetas tipo conversación de SMS |
 | 12 | Nosotros | `#about` | Imagen + checklist |
-| 13 | Formulario | `#estimate` | 3 pasos, `#qform` / `#qok` |
-| 14 | FAQ | `#faq` | 7 `<details>` |
-| 15 | Banda CTA | `.cta-band` | |
-| 16 | Pie | `footer` | 4 columnas + `#newsform` + franja de empleo |
-| 17 | Botones flotantes | `#fabs` | WhatsApp + Text us, aparecen a > 520px |
+| 13 | FAQ | `#faq` | 7 `<details>` |
+| 14 | Banda CTA | `.cta-band` | Solo el titular. **Sin texto ni botón** |
+| 15 | Pie | `footer` | 4 columnas. Sin newsletter ni franja de empleo |
+| 16 | Modales de contacto | `#email-modal`, `#phone-modal` | Ocultos. Muestran correo y teléfono en grande |
+| 17 | Botones flotantes | `#fabs` | WhatsApp siempre; *Text us* solo en móvil (`.mobile-only`). Aparecen a > 520px |
 | 18 | Cookies | `#cookie` | Banner, cookie `vc_consent` |
 | 19 | JSON-LD | — | `HouseholdCleaningService` |
+
+**Retirado:** la sección de formulario `#estimate` (`#qform` / `#qok`), que ocupaba la
+posición 13, y el alta de newsletter `#newsform` del pie.
 
 ### 3.3 Sistema de diseño (tokens ya definidos en `:root`)
 
@@ -159,23 +168,31 @@ Un único archivo `index.html` (~73 KB, ~1.800 líneas) autocontenido: HTML + CS
 
 ### 3.4 JavaScript actual
 
-Un único IIFE, sin dependencias. Bloques:
+Un IIFE con todo el comportamiento, más un bloque suelto al final para GSAP. Bloques:
 
 - Header/topbar/FABs por scroll
 - `IntersectionObserver` para `.reveal`
 - Contadores animados
 - Inyección de la marquesina
 - Deslizador antes/después (pointer events + auto-demo al entrar en viewport)
-- Navegación del formulario por pasos
-- Newsletter (demo)
 - Banner de cookies (`document.cookie`, clave `vc_consent`)
-- Click en tarjeta de servicio → scroll a `#estimate`
+- Click en tarjeta de zona → recarga el iframe del mapa en esa ciudad y la marca `.active`
 - Brillo del botón siguiendo el cursor
 - Fallback si una imagen falla
+- Año del pie con `new Date().getFullYear()`
+- Modales de contacto: en móvil el botón abre `mailto:` / `tel:`, en escritorio muestra el dato. El reparto se decide **en el clic** con `matchMedia('(max-width:767px), (pointer:coarse)')`, no al cargar
+- *(fuera del IIFE)* GSAP: elevación de `.card`, `.promise` y `.phone-card` al pasar el cursor
 
-### 3.5 Contrato de datos del formulario
+> ⚠️ Todo el IIFE va en un mismo ámbito sin `try/catch`. Un `getElementById` que
+> devuelva `null` aborta **todos los bloques posteriores**. Ya ocurrió: tras retirar
+> el formulario, el script seguía buscando `#qform` y eso dejó sin funcionar los
+> modales y las tarjetas de zona. Al borrar markup, hay que borrar su JS.
 
-Campos actuales de `#qform`, con su atributo `name`:
+### 3.5 Contrato de datos del formulario *(no implementado hoy)*
+
+El formulario ya no existe en el sitio. Esta tabla se conserva como el diseño de
+campos acordado, para cuando se reconstruya con la API propia (RF-01). El
+honeypot y los valores de cada campo siguen siendo válidos como punto de partida:
 
 | `name` | Tipo | Requerido | Valores |
 |---|---|---|---|
@@ -193,13 +210,37 @@ Campos actuales de `#qform`, con su atributo `name`:
 | `notes` | textarea | no | |
 | `company_website` | text | — | **honeypot**, debe llegar vacío |
 
+### 3.6 Qué se retiró, y qué queda en su lugar
+
+| Retirado | Motivo | Consecuencia |
+|---|---|---|
+| Formulario `#estimate` completo | Se descartó el backend de terceros; se hará con API propia | RF-01 a RF-04 y RF-11 quedan en suspenso |
+| Los 7 botones `.btn` de la página | Decisión de la clienta | No queda ninguna llamada a la acción visual |
+| Alta de newsletter `#newsform` | Decisión de la clienta | RF-14 en suspenso |
+| Franja "We're hiring" del pie | Decisión de la clienta | Afecta a F2-04 |
+| Sección de vídeo | El autoplay con sonido lo bloquea el navegador | `videos/vicky.mp4` sigue en el repositorio, sin usar |
+
+**Vías de contacto que quedan hoy**, y son las únicas:
+
+1. Teléfono del header — `tel:` directo.
+2. Botón flotante de WhatsApp — visible en todo dispositivo.
+3. Botón flotante *Text us* — **solo móvil**, `sms:`.
+4. Iconos de correo y teléfono del pie — en móvil abren la app; en escritorio abren un modal con el dato para copiarlo.
+5. Los mismos datos en texto en la columna *Contact* del pie.
+
+> ⚠️ En escritorio no queda ningún camino que lleve al usuario a contactar por
+> iniciativa de la página: no hay formulario, ni botones, ni *Text us*. Solo
+> enlaces de teléfono y el WhatsApp flotante. La sección 1.2 pone "que pidan
+> presupuesto" como segundo objetivo del negocio, y hoy no hay forma de hacerlo
+> sin salir del sitio. Conviene decidir con qué se sustituye antes de publicar.
+
 ---
 
 ## 4. Restricciones técnicas (reglas duras)
 
 1. **Stack:** HTML + CSS + JavaScript plano. Un solo archivo `index.html` para la página principal.
 2. **Sin frameworks, sin build, sin bundler.** Nada de React, Vue, Tailwind, Sass ni paso de compilación.
-3. **Sin dependencias de terceros en tiempo de ejecución**, salvo: las fuentes, el servicio de formulario y la analítica.
+3. **Sin dependencias de terceros en tiempo de ejecución**, salvo: las fuentes, GSAP para animación, el servicio de formulario y la analítica. Todas por CDN en la cabecera.
 4. **Cero `localStorage` / `sessionStorage`.** Solo cookies con `try/catch` (ya implementado así).
 5. **El CSS vive en el `<style>` del propio archivo.** No dividir en hojas externas mientras el sitio sea de una página.
 6. **Todo el texto visible en inglés.** Comentarios de código y commits, en español si lo prefieres.
@@ -212,14 +253,18 @@ Campos actuales de `#qform`, con su atributo `name`:
 
 | ID | Problema | Impacto |
 |---|---|---|
-| **DT-01** | Las 11 imágenes se cargan por *hotlink* desde `images.unsplash.com`. | Dependencia de un tercero sin control de disponibilidad ni de formato. Hay que descargarlas, convertirlas y servirlas desde el propio dominio. |
+| ~~DT-01~~ | ~~Las imágenes se cargan por *hotlink* desde `images.unsplash.com`.~~ | **Resuelto.** Las 14 imágenes se sirven desde `images/`. Falta convertirlas a WebP/AVIF y darles `width`/`height` (RF-07). |
 | **DT-02** | Fuentes cargadas desde `fonts.googleapis.com` con `<link>` bloqueante. | Penaliza LCP y añade una petición a un tercero antes del consentimiento de cookies. |
 | **DT-03** | El `<iframe>` de Google Maps se carga siempre, **antes** de que el usuario acepte cookies. | Carga scripts de terceros sin consentimiento y pesa en el rendimiento. |
 | **DT-04** | El banner de cookies guarda la preferencia pero **no condiciona nada**: no hay ningún script que dependa de ella. | En cuanto se añada GA4 (RF-12) hay que respetar `vc_consent`, o el banner es decorativo. |
-| **DT-05** | El año del pie sale de `document.lastModified.slice(6,10)`. | Frágil y semánticamente incorrecto. Sustituir por `new Date().getFullYear()`. |
-| **DT-06** | El `<input type="file">` no tiene atributo `name`. | Aunque se conecte un backend, el archivo no se enviaría. |
+| ~~DT-05~~ | ~~El año del pie sale de `document.lastModified`.~~ | **Resuelto.** Usa `new Date().getFullYear()`. |
+| ~~DT-06~~ | ~~El `<input type="file">` no tiene atributo `name`.~~ | **Sin objeto.** El formulario ya no existe. Tenerlo en cuenta al reconstruirlo. |
 | **DT-07** | El deslizador antes/después usa la misma foto con un filtro CSS para el "antes". | Es honesto como maqueta, pero engañoso en producción. Necesita un par real. |
 | **DT-08** | Los testimonios son inventados. | **No puede publicarse así.** Ver RF-08. |
+| **DT-09** | Queda CSS de bloques ya borrados: `.form-*`, `.fstep`, `.progress`, `.chip*`, `.upload`, `.hp`, `.news`, `.hiring`. Unas 45 reglas sin ningún elemento que las use. | Peso muerto y ruido para quien lea el archivo. Se puede borrar sin efecto visible. |
+| **DT-10** | `images/bee-logo.png` pesa 2 MB y se muestra a 55 px. | Es la descarga más pesada del sitio. Bloquea el objetivo de rendimiento de RF-16. |
+| **DT-11** | `videos/vicky.mp4` sigue versionado pero ninguna página lo referencia. | Infla el repositorio sin aportar nada. Borrarlo o volver a usarlo. |
+| **DT-12** | El `<link rel="canonical">` apunta a `https://www.vickyscleaning.com/`, dominio aún no contratado. | Si se publica en otro dominio, se le indica a Google que la página buena es otra. Ver RF-06 y RF-17. |
 
 ---
 
@@ -227,18 +272,26 @@ Campos actuales de `#qform`, con su atributo `name`:
 
 Prioridades: **P0** bloquea la publicación · **P1** debe estar en el lanzamiento · **P2** posterior.
 
+> ⚠️ **RF-01, RF-02, RF-03, RF-04, RF-11 y RF-14 están en suspenso** desde que se
+> retiró el formulario (ver 3.6). Se conservan porque describen el trabajo a hacer
+> si se reconstruye. Su prioridad P0/P1 está pendiente de revisar: hoy no bloquean
+> la publicación de lo que hay, pero sí dejan al sitio sin captación propia.
+
 ---
 
-### RF-01 · Backend del formulario de presupuesto — **P0**
+### RF-01 · Backend del formulario de presupuesto — **P0** *(en suspenso)*
 
-Hoy el formulario se rellena, valida mínimamente y muestra la pantalla de agradecimiento **sin enviar nada a ninguna parte**. Los datos se pierden.
+El formulario se retiró del sitio. Cuando existía, se rellenaba, validaba mínimamente y mostraba la pantalla de agradecimiento **sin enviar nada a ninguna parte**.
+
+Decisión tomada: **no se usará un servicio de formularios de terceros.** El envío irá contra una API propia, aún por construir.
 
 **Qué hacer**
 
-- Elegir un backend de formularios sin servidor. Candidatos, con sus límites al momento de escribir esto (verificar antes de contratar, cambian a menudo): Web3Forms (plan gratuito sin límite de envíos, admite adjuntos), Netlify Forms (integrado si se aloja allí, adjuntos normalmente en plan de pago), Formspree (50 envíos/mes gratis, adjuntos solo de pago).
-- Añadir `name="photos"` al input de archivo (DT-06).
-- Sustituir el `submit` actual por un `fetch` real con `FormData`.
-- Mantener la pantalla `#qok` como estado de éxito y añadir un estado de error visible si la petición falla.
+- Reconstruir el formulario con los campos de la tabla 3.5.
+- Definir el endpoint de la API propia: URL, método, formato y respuesta de error.
+- Añadir `name="photos"` al input de archivo, o decidir que no se admiten adjuntos.
+- Enviar con `fetch` y `FormData`.
+- Recuperar la pantalla de éxito y añadir un estado de error visible si la petición falla.
 - Deshabilitar el botón y mostrar un indicador mientras se envía, para evitar dobles envíos.
 
 **Criterio de aceptación**
@@ -250,9 +303,9 @@ Hoy el formulario se rellena, valida mínimamente y muestra la pantalla de agrad
 
 ---
 
-### RF-02 · Validación por pasos — **P0**
+### RF-02 · Validación por pasos — **P0** *(en suspenso: no hay formulario)*
 
-Hoy los botones *Continue* avanzan sin comprobar nada, y la validación final solo mira que tres campos no estén vacíos.
+Cuando el formulario existía, los botones *Continue* avanzaban sin comprobar nada, y la validación final solo miraba que tres campos no estuvieran vacíos. Al reconstruirlo, no repetir eso.
 
 **Qué hacer**
 
@@ -269,9 +322,9 @@ Hoy los botones *Continue* avanzan sin comprobar nada, y la validación final so
 
 ---
 
-### RF-03 · Notificación al negocio — **P0**
+### RF-03 · Notificación al negocio — **P0** *(en suspenso: no hay formulario)*
 
-La clienta prefiere trabajar por mensajes de texto.
+La clienta prefiere trabajar por mensajes de texto. Sin formulario no hay nada que notificar, pero el criterio sigue valiendo para cuando lo haya.
 
 **Qué hacer**
 
@@ -286,13 +339,13 @@ La clienta prefiere trabajar por mensajes de texto.
 
 ---
 
-### RF-04 · Antispam real — **P0**
+### RF-04 · Antispam real — **P0** *(en suspenso: no hay formulario)*
 
-Hay un honeypot (`company_website`), que frena bots básicos. No es suficiente cuando el formulario esté indexado.
+El diseño incluía un honeypot (`company_website`), que frena bots básicos. No es suficiente cuando el formulario esté indexado.
 
 **Qué hacer**
 
-- Activar el captcha que traiga el servicio elegido (hCaptcha o Cloudflare Turnstile suelen ser opciones sin fricción y sin coste).
+- Montar el captcha en la API propia: hCaptcha o Cloudflare Turnstile suelen ser opciones sin fricción y sin coste. **La verificación del token debe hacerse en el servidor**; hacerla solo en el cliente no protege nada.
 - Mantener el honeypot.
 - Descartar en cliente los envíos con menos de 3 segundos de vida del formulario.
 
@@ -339,21 +392,22 @@ No hay ni dominio ni hosting.
 
 ---
 
-### RF-07 · Sustituir las fotografías — **P1**
+### RF-07 · Sustituir las fotografías — **P1** *(a medias)*
 
-Las 11 imágenes son de stock. La clienta declaró tener fotos propias buenas.
+Las imágenes ya se sirven desde `images/` en lugar de Unsplash, lo que cierra DT-01. **Pero siguen siendo de stock**: solo se descargaron, no se sustituyeron. La clienta declaró tener fotos propias buenas.
 
 **Qué hacer**
 
-- Descargar las fotos reales, recortarlas a las proporciones que usa cada bloque (hero panorámico, tarjetas 4:3, *about* 4:3).
-- Convertir a WebP con AVIF de respaldo, servir desde `/img/` del propio dominio (resuelve DT-01).
+- Reemplazar los archivos de `images/` por las fotos reales, recortadas a las proporciones que usa cada bloque (hero panorámico, tarjetas 4:3, *about* 4:3).
+- Convertir a WebP con AVIF de respaldo.
 - `width` y `height` explícitos en cada `<img>` para evitar saltos de maquetación.
 - Mantener `loading="lazy"` en todo salvo la imagen del hero.
 - `alt` descriptivo y específico en cada una.
 
 **Criterio de aceptación**
 
-- [ ] Cero peticiones a `images.unsplash.com`.
+- [x] Cero peticiones a `images.unsplash.com`.
+- [ ] Ninguna imagen es de stock.
 - [ ] CLS < 0.1 en Lighthouse móvil.
 - [ ] Ninguna imagen del hero supera los 250 KB.
 
@@ -377,20 +431,21 @@ Los tres testimonios actuales están inventados. **No se puede publicar el sitio
 
 ---
 
-### RF-09 · Marca: logo, favicon y og:image — **P1**
+### RF-09 · Marca: logo, favicon y og:image — **P1** *(a medias)*
 
-Hoy el logotipo es un icono provisional generado en SVG. La clienta tiene su logo solo como imagen, no vectorial.
+El logo real (`images/bee-logo.png`) ya está en `.logo-mark` de cabecera y pie, en lugar del icono provisional en SVG. Sigue siendo mapa de bits, no vectorial, y pesa 2 MB (DT-10). Falta todo lo demás.
 
 **Qué hacer**
 
-- Pedirle el archivo original. Si no existe, vectorizarlo.
-- Sustituir `.logo-mark` en cabecera y pie.
+- Pedir el archivo original. Si no existe, vectorizarlo.
+- Redimensionar `bee-logo.png` a la resolución que realmente se usa (55 px, 110 px para pantallas de doble densidad).
 - Generar favicon (32, 180 para Apple, 192 y 512 para Android) y `site.webmanifest`.
 - Crear una `og:image` de 1200×630 y añadir la etiqueta correspondiente, que hoy falta.
 
 **Criterio de aceptación**
 
-- [ ] El logo real aparece en cabecera, pie y favicon.
+- [x] El logo real aparece en cabecera y pie.
+- [ ] El logo real aparece como favicon.
 - [ ] Al compartir el enlace en WhatsApp o Facebook se ve una imagen correcta.
 
 ---
@@ -410,9 +465,9 @@ Ver DT-07.
 
 ---
 
-### RF-11 · Preselección de servicio desde la tarjeta — **P1**
+### RF-11 · Preselección de servicio desde la tarjeta — **P1** *(en suspenso: no hay formulario)*
 
-Hoy pulsar una tarjeta de servicio baja al formulario pero no preselecciona nada.
+Las tarjetas de servicio ya no son pulsables: se retiró el manejador que bajaba al formulario. Si se reconstruye el formulario, recuperar la idea completa, no solo el scroll.
 
 **Qué hacer**
 
@@ -434,15 +489,14 @@ La clienta quiere saber si la web funciona. Hoy no hay nada instalado.
 **Qué hacer**
 
 - Instalar Google Analytics 4, **condicionado al consentimiento de cookies** (resuelve DT-04).
-- Registrar como eventos: clic en cualquier `tel:`, clic en el botón de WhatsApp, clic en `sms:`, avance de cada paso del formulario, y envío completado.
+- Registrar como eventos: clic en cualquier `tel:`, clic en el botón de WhatsApp, clic en `sms:`, apertura de los modales de contacto de escritorio y clic en una tarjeta de zona. Cuando vuelva el formulario, añadir avance de paso y envío completado.
 - Dar de alta Search Console y enviar el sitemap (RF-19).
 - No instalar píxeles publicitarios todavía: la clienta dijo que la publicidad de pago va "más adelante".
 
 **Criterio de aceptación**
 
 - [ ] Con las cookies rechazadas, no se carga ningún script de GA4.
-- [ ] En GA4 se distinguen llamadas, mensajes y formularios como eventos separados.
-- [ ] Se ve en qué paso del formulario abandona la gente.
+- [ ] En GA4 se distinguen llamadas, mensajes y WhatsApp como eventos separados.
 
 ---
 
@@ -462,13 +516,13 @@ El botón apunta a `wa.me/12392856103`. Si ese número no está dado de alta en 
 
 ---
 
-### RF-14 · Newsletter — **P1**
+### RF-14 · Newsletter — **P1** *(en suspenso: se retiró el alta)*
 
-La clienta marcó que sí quiere enviar comunicaciones por correo. El formulario del pie es una demo.
+La clienta marcó en el cuestionario que sí quería enviar comunicaciones por correo, pero después pidió retirar el bloque *Cleaning tips by email* del pie, que era una demo. **Conviene confirmar si descarta la newsletter o solo ese bloque.**
 
 **Qué hacer**
 
-- Conectar `#newsform` a Mailchimp, Buttondown o similar.
+- Volver a poner un alta en el pie y conectarla a Mailchimp, Buttondown o similar.
 - Añadir casilla de consentimiento explícito y enlace a la política de privacidad.
 - Cumplir CAN-SPAM: dirección física del remitente y enlace de baja en cada envío.
 
@@ -487,13 +541,15 @@ El sitio parte de una base razonable (enlace de salto, `aria-label` en los icono
 
 - Pasar axe o Lighthouse y corregir lo que salga.
 - Verificar contraste real del amarillo sobre blanco (probablemente insuficiente para texto pequeño: usar `--brand-dark` para texto y reservar `--brand` para fondos de botón con texto marino encima).
-- Recorrer todo el sitio solo con teclado, incluido el formulario por pasos y el deslizador antes/después.
+- Recorrer todo el sitio solo con teclado, incluido el deslizador antes/después y los modales de contacto.
 - Añadir alternativa accesible al deslizador (un `input[type=range]` oculto visualmente o control por flechas).
+- Los modales se abren sin mover el foco a su interior ni devolverlo al cerrar, y no atrapan el tabulador. Cierran con Escape, que sí está.
+- Las tarjetas de zona son `<div>` con manejador de clic: no reciben foco ni se activan con teclado. Convertirlas en `<button>`.
 
 **Criterio de aceptación**
 
 - [ ] Lighthouse Accessibility ≥ 95.
-- [ ] Todo el recorrido hasta enviar el formulario es completable solo con teclado.
+- [ ] Todo el sitio es recorrible y accionable solo con teclado, modales y zonas incluidos.
 - [ ] Ningún texto por debajo de 4.5:1 de contraste.
 
 ---
@@ -561,7 +617,7 @@ Estas decisiones no bloquean la fase 1, pero conviene no cerrarles la puerta.
 
 **F2-03 · Blog.** Marcado por la clienta. Requiere un gestor de contenidos, lo que enlaza con F2-05.
 
-**F2-04 · Empleo.** Marcó las tres funciones (página de ofertas, formulario con currículum, aviso de datos) pero en prioridades lo dejó para después. Hoy solo existe una franja "We're hiring" en el pie.
+**F2-04 · Empleo.** Marcó las tres funciones (página de ofertas, formulario con currículum, aviso de datos) pero en prioridades lo dejó para después. La franja "We're hiring" que había en el pie se retiró, así que hoy no queda nada de empleo en el sitio.
 
 **F2-05 · Decisión de CMS.** La clienta declaró que **ella actualizará la web y necesita un panel fácil**. Este HTML plano no lo tiene. Hay que preguntarle cuántas veces al año piensa cambiar algo:
 
@@ -585,6 +641,14 @@ Estas se tomaron a partir de respuestas explícitas de la clienta. Cambiarlas re
 - ❌ **No sello de reseñas de Google** hasta que exista la ficha con reseñas reales.
 - ✅ **Tono:** cortés y cercano, trato de usted trasladado al inglés. Nada de jerga ni de informalidad forzada.
 
+Añadidas en agosto de 2026, a petición de la clienta:
+
+- ❌ **Sin botones** en la página. Se retiraron los siete que había.
+- ❌ **Sin franja de empleo** en el pie.
+- ❌ **Sin sección de vídeo.** Se probó con el vídeo de TikTok y se descartó.
+- ✅ **El botón *Text us* es solo para móvil.** En escritorio un enlace `sms:` no lleva a ninguna parte útil.
+- ✅ **En escritorio, correo y teléfono se muestran en un modal** para copiarlos, en vez de lanzar una aplicación que el usuario quizá no tenga configurada.
+
 ---
 
 ## 9. Preguntas abiertas para la clienta
@@ -603,6 +667,9 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 | 8 | Logo original, a poder ser vectorial | RF-09 |
 | 9 | ¿Confirma Bonita Springs, Immokalee y Lehigh Acres como zonas de servicio? Están en la marquesina pero no en su listado. | Sección 2.4 |
 | 10 | Presupuesto (respondió "por definir") y si acepta cuota mensual de mantenimiento | Alcance general |
+| 11 | Retirado el formulario y los botones, ¿con qué se sustituye la petición de presupuesto, que era el objetivo 2 de la sección 1.2? | RF-01, y la definición de terminado |
+| 12 | ¿Descarta la newsletter, o solo el bloque del pie? | RF-14 |
+| 13 | ¿Sigue en pie construir la API propia del formulario? En caso afirmativo, quién la hace y en qué plazo | RF-01 |
 
 ---
 
@@ -610,12 +677,15 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 
 El sitio se puede publicar cuando **todos** estos puntos sean ciertos:
 
-- [ ] Todos los `RF` de prioridad **P0** están cerrados.
+- [ ] Todos los `RF` de prioridad **P0** están cerrados, o se ha decidido y anotado por qué no aplican.
+- [ ] Está resuelta la pregunta 11: hay una vía de petición de presupuesto, o consta la decisión de no tenerla.
 - [ ] No queda ni una foto de stock ni un testimonio inventado.
-- [ ] Un envío real del formulario llega a la clienta en menos de 2 minutos, con adjuntos si los hubiera.
+- [ ] Si hay formulario, un envío real llega a la clienta en menos de 2 minutos, con adjuntos si los hubiera.
 - [ ] Lighthouse móvil: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO = 100.
-- [ ] Todo el recorrido hasta enviar el formulario funciona solo con teclado.
+- [ ] Todo el sitio es recorrible solo con teclado.
 - [ ] Los enlaces `tel:`, `sms:` y de WhatsApp se han probado en un teléfono real, iOS y Android.
+- [ ] Los modales de contacto se han probado en escritorio, y en móvil se ha comprobado que abren la aplicación.
+- [ ] El `<link rel="canonical">` apunta al dominio real (DT-12).
 - [ ] Las tres páginas legales existen y tienen contenido.
 - [ ] La ficha de Google Business está verificada con el NAP idéntico al del sitio.
 - [ ] Search Console indexa la web y el JSON-LD valida sin errores.
@@ -625,7 +695,7 @@ El sitio se puede publicar cuando **todos** estos puntos sean ciertos:
 
 ## Anexo A · `CLAUDE.md` para la raíz del repositorio
 
-Copia esto tal cual en `CLAUDE.md` junto al `index.html`.
+Ya está creado en la raíz. Esta copia se mantiene sincronizada con él.
 
 ```markdown
 # Vicky's Cleaning — sitio web
@@ -647,6 +717,8 @@ antes de tocar nada; los datos del negocio de su sección 2 son la fuente de ver
   texto ni fondos grandes.
 - Mantener el bloque `@media (prefers-reduced-motion: reduce)` cubriendo toda
   animación nueva.
+- Librerías permitidas: GSAP (animaciones), servicio de formulario, analítica,
+  fuentes. Cargadas vía CDN en la cabeza del HTML.
 
 ## Datos que no se inventan
 
@@ -660,8 +732,8 @@ El correo es Viky1912@hotmail.com — con una sola k. Es correcto.
 
 - Abrir en 390px y en 1440px y revisar que no haya scroll horizontal.
 - Consola sin errores.
-- Probar el formulario de los tres pasos hasta el final.
-- Recorrer con teclado desde el primer enlace hasta el botón de enviar.
+- Recorrer todo el sitio con teclado, de principio a fin.
+- Al borrar markup, borrar también el JS y el CSS que lo acompañaban.
 
 ## Flujo de trabajo
 
@@ -669,11 +741,17 @@ Una rama por requisito, nombrada `rf-01-backend-formulario` y similares.
 Commits en español, en imperativo. No mezclar requisitos en un mismo commit.
 ```
 
-## Anexo B · Primer encargo sugerido para Claude Code
+## Anexo B · Historial de encargos
 
-> Lee `ESPECIFICACION-FUNCIONAL.md` y `CLAUDE.md`. Empieza por los requisitos
-> P0 en este orden: RF-01, RF-02, RF-04. Para RF-01 usa Web3Forms salvo que
-> encuentres un motivo para no hacerlo, y explícamelo antes de implementarlo.
-> Resuelve de paso DT-05 y DT-06, que son de una línea. No toques todavía las
-> imágenes ni los testimonios: dependen de material que aún no tengo.
-> Antes de escribir código, dime qué has entendido y qué vas a hacer.
+**Primer encargo (hecho).** Empezar por RF-01, RF-02 y RF-04, con Web3Forms para
+el backend, y resolver de paso DT-05 y DT-06.
+
+**Cómo terminó.** Se descartó Web3Forms en favor de una API propia, y después se
+retiró el formulario entero, con lo que RF-01 a RF-04 quedaron en suspenso. Se
+cerraron DT-05 y DT-01, se añadió GSAP y se hicieron los cambios de contenido y
+contacto que recoge la sección 3.6.
+
+**Siguiente encargo, cuando estén resueltas las preguntas 11 a 13** de la sección 9.
+Mientras tanto, trabajo que no depende de esas respuestas: DT-09 (borrar el CSS
+muerto), DT-10 (redimensionar el logo), DT-11 (quitar el vídeo sin uso) y RF-15
+(accesibilidad de modales y tarjetas de zona).
