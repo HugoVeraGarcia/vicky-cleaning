@@ -30,6 +30,11 @@ En orden de importancia, según lo que declaró la clienta:
 
 Textualmente prefiere que los clientes **le escriban por mensaje de texto o por correo electrónico**. Ese es el canal que hay que privilegiar en el diseño de las llamadas a la acción.
 
+> Los tres objetivos se atienden hoy por teléfono, WhatsApp, SMS y correo. La web
+> no tiene formulario: es una decisión cerrada de la clienta (sección 8). El
+> objetivo 2 se cumple cuando alguien llama o escribe pidiendo presupuesto, no
+> cuando envía nada desde la página.
+
 ### 1.3 Cómo se medirá el éxito
 
 A los 6 meses: aumento medible en presupuestos solicitados, llamadas y mensajes recibidos, y clientes nuevos atribuibles a la web. Esto implica que la analítica (RF-12) no es opcional.
@@ -106,9 +111,9 @@ Todas en Collier, Lee y Charlotte County. La marquesina incluye además tres zon
 
 ## 3. Estado actual del código
 
-> ⚠️ Estado a **12 de agosto de 2026**. El formulario de presupuesto, la banda de
-> botones y el alta de newsletter se retiraron del sitio; varios requisitos de la
-> sección 6 quedaron en suspenso por ello. Ver 3.6.
+> ⚠️ Estado a **12 de agosto de 2026**. El formulario de presupuesto, los botones
+> y el alta de newsletter se retiraron del sitio, y la clienta confirmó que no
+> vuelven. Seis requisitos de la sección 6 quedaron descartados por ello. Ver 3.6.
 
 ### 3.1 Qué hay
 
@@ -214,9 +219,9 @@ honeypot y los valores de cada campo siguen siendo válidos como punto de partid
 
 | Retirado | Motivo | Consecuencia |
 |---|---|---|
-| Formulario `#estimate` completo | Se descartó el backend de terceros; se hará con API propia | RF-01 a RF-04 y RF-11 quedan en suspenso |
+| Formulario `#estimate` completo | Decisión de la clienta: el contacto se atiende por teléfono y mensajería | RF-01 a RF-04 y RF-11 descartados |
 | Los 7 botones `.btn` de la página | Decisión de la clienta | No queda ninguna llamada a la acción visual |
-| Alta de newsletter `#newsform` | Decisión de la clienta | RF-14 en suspenso |
+| Alta de newsletter `#newsform` | Decisión de la clienta: gestionará las comunicaciones por correo manualmente | RF-14 descartado |
 | Franja "We're hiring" del pie | Decisión de la clienta | Afecta a F2-04 |
 | Sección de vídeo | El autoplay con sonido lo bloquea el navegador | `videos/vicky.mp4` sigue en el repositorio, sin usar |
 
@@ -228,11 +233,10 @@ honeypot y los valores de cada campo siguen siendo válidos como punto de partid
 4. Iconos de correo y teléfono del pie — en móvil abren la app; en escritorio abren un modal con el dato para copiarlo.
 5. Los mismos datos en texto en la columna *Contact* del pie.
 
-> ⚠️ En escritorio no queda ningún camino que lleve al usuario a contactar por
-> iniciativa de la página: no hay formulario, ni botones, ni *Text us*. Solo
-> enlaces de teléfono y el WhatsApp flotante. La sección 1.2 pone "que pidan
-> presupuesto" como segundo objetivo del negocio, y hoy no hay forma de hacerlo
-> sin salir del sitio. Conviene decidir con qué se sustituye antes de publicar.
+**Esto es deliberado y está confirmado.** En escritorio no hay formulario ni
+botones: el usuario llama, escribe por WhatsApp o copia el correo del modal. La
+petición de presupuesto, que es el objetivo 2 de la sección 1.2, se atiende por
+esos canales y no dentro de la web. Ver la sección 8.
 
 ---
 
@@ -272,18 +276,18 @@ honeypot y los valores de cada campo siguen siendo válidos como punto de partid
 
 Prioridades: **P0** bloquea la publicación · **P1** debe estar en el lanzamiento · **P2** posterior.
 
-> ⚠️ **RF-01, RF-02, RF-03, RF-04, RF-11 y RF-14 están en suspenso** desde que se
-> retiró el formulario (ver 3.6). Se conservan porque describen el trabajo a hacer
-> si se reconstruye. Su prioridad P0/P1 está pendiente de revisar: hoy no bloquean
-> la publicación de lo que hay, pero sí dejan al sitio sin captación propia.
+> ⚠️ **RF-01, RF-02, RF-03, RF-04, RF-11 y RF-14 están descartados.** La clienta
+> decidió no tener formulario ni newsletter en el sitio (ver secciones 3.6 y 8).
+> Ya no bloquean la publicación. Se conservan tachados, no borrados: si algún día
+> se reconsidera, el trabajo ya está analizado y no hay que rehacerlo.
 
 ---
 
-### RF-01 · Backend del formulario de presupuesto — **P0** *(en suspenso)*
+### ~~RF-01 · Backend del formulario de presupuesto~~ — **descartado**
 
-El formulario se retiró del sitio. Cuando existía, se rellenaba, validaba mínimamente y mostraba la pantalla de agradecimiento **sin enviar nada a ninguna parte**.
+El formulario se retiró del sitio y no se reconstruye: la clienta atiende las peticiones por teléfono, WhatsApp, SMS y correo. Antes de retirarlo se había descartado ya el backend de terceros en favor de una API propia, que tampoco se construirá.
 
-Decisión tomada: **no se usará un servicio de formularios de terceros.** El envío irá contra una API propia, aún por construir.
+Lo que sigue se conserva por si la decisión cambia.
 
 **Qué hacer**
 
@@ -303,7 +307,7 @@ Decisión tomada: **no se usará un servicio de formularios de terceros.** El en
 
 ---
 
-### RF-02 · Validación por pasos — **P0** *(en suspenso: no hay formulario)*
+### ~~RF-02 · Validación por pasos~~ — **descartado: no hay formulario**
 
 Cuando el formulario existía, los botones *Continue* avanzaban sin comprobar nada, y la validación final solo miraba que tres campos no estuvieran vacíos. Al reconstruirlo, no repetir eso.
 
@@ -322,9 +326,9 @@ Cuando el formulario existía, los botones *Continue* avanzaban sin comprobar na
 
 ---
 
-### RF-03 · Notificación al negocio — **P0** *(en suspenso: no hay formulario)*
+### ~~RF-03 · Notificación al negocio~~ — **descartado: no hay formulario**
 
-La clienta prefiere trabajar por mensajes de texto. Sin formulario no hay nada que notificar, pero el criterio sigue valiendo para cuando lo haya.
+La clienta prefiere trabajar por mensajes de texto, y ahora los recibe directamente en el móvil. No hay nada que notificar.
 
 **Qué hacer**
 
@@ -339,7 +343,7 @@ La clienta prefiere trabajar por mensajes de texto. Sin formulario no hay nada q
 
 ---
 
-### RF-04 · Antispam real — **P0** *(en suspenso: no hay formulario)*
+### ~~RF-04 · Antispam real~~ — **descartado: no hay formulario**
 
 El diseño incluía un honeypot (`company_website`), que frena bots básicos. No es suficiente cuando el formulario esté indexado.
 
@@ -465,9 +469,9 @@ Ver DT-07.
 
 ---
 
-### RF-11 · Preselección de servicio desde la tarjeta — **P1** *(en suspenso: no hay formulario)*
+### ~~RF-11 · Preselección de servicio desde la tarjeta~~ — **descartado: no hay formulario**
 
-Las tarjetas de servicio ya no son pulsables: se retiró el manejador que bajaba al formulario. Si se reconstruye el formulario, recuperar la idea completa, no solo el scroll.
+Las tarjetas de servicio ya no son pulsables: se retiró el manejador que bajaba al formulario.
 
 **Qué hacer**
 
@@ -516,20 +520,11 @@ El botón apunta a `wa.me/12392856103`. Si ese número no está dado de alta en 
 
 ---
 
-### RF-14 · Newsletter — **P1** *(en suspenso: se retiró el alta)*
+### ~~RF-14 · Newsletter~~ — **descartado**
 
-La clienta marcó en el cuestionario que sí quería enviar comunicaciones por correo, pero después pidió retirar el bloque *Cleaning tips by email* del pie, que era una demo. **Conviene confirmar si descarta la newsletter o solo ese bloque.**
+La clienta marcó en el cuestionario que quería enviar comunicaciones por correo, pero decidió después no tener alta en la web y **gestionar esos envíos manualmente**. Se retiró el bloque *Cleaning tips by email* del pie.
 
-**Qué hacer**
-
-- Volver a poner un alta en el pie y conectarla a Mailchimp, Buttondown o similar.
-- Añadir casilla de consentimiento explícito y enlace a la política de privacidad.
-- Cumplir CAN-SPAM: dirección física del remitente y enlace de baja en cada envío.
-
-**Criterio de aceptación**
-
-- [ ] Un alta real aparece en la lista del proveedor.
-- [ ] El correo de bienvenida incluye enlace de baja funcional.
+Si algún día envía correos a una lista, CAN-SPAM le sigue obligando a incluir su dirección física y un enlace de baja en cada envío, lo haga con una herramienta o a mano.
 
 ---
 
@@ -643,6 +638,8 @@ Estas se tomaron a partir de respuestas explícitas de la clienta. Cambiarlas re
 
 Añadidas en agosto de 2026, a petición de la clienta:
 
+- ❌ **Sin formulario de presupuesto.** La petición se atiende por teléfono, WhatsApp, SMS y correo. En escritorio la web no ofrece ninguna vía propia de contacto, y es intencionado.
+- ❌ **Sin newsletter en la web.** La clienta gestionará las comunicaciones por correo manualmente.
 - ❌ **Sin botones** en la página. Se retiraron los siete que había.
 - ❌ **Sin franja de empleo** en el pie.
 - ❌ **Sin sección de vídeo.** Se probó con el vídeo de TikTok y se descartó.
@@ -667,9 +664,14 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 | 8 | Logo original, a poder ser vectorial | RF-09 |
 | 9 | ¿Confirma Bonita Springs, Immokalee y Lehigh Acres como zonas de servicio? Están en la marquesina pero no en su listado. | Sección 2.4 |
 | 10 | Presupuesto (respondió "por definir") y si acepta cuota mensual de mantenimiento | Alcance general |
-| 11 | Retirado el formulario y los botones, ¿con qué se sustituye la petición de presupuesto, que era el objetivo 2 de la sección 1.2? | RF-01, y la definición de terminado |
-| 12 | ¿Descarta la newsletter, o solo el bloque del pie? | RF-14 |
-| 13 | ¿Sigue en pie construir la API propia del formulario? En caso afirmativo, quién la hace y en qué plazo | RF-01 |
+
+Resueltas en agosto de 2026, recogidas ya en la sección 8:
+
+| Pregunta | Respuesta |
+|---|---|
+| Retirado el formulario, ¿con qué se sustituye la petición de presupuesto? | Con nada dentro de la web. Se atiende por teléfono y mensajería |
+| ¿Descarta la newsletter, o solo el bloque del pie? | Descarta la newsletter. La trabajará manualmente |
+| ¿Sigue en pie construir la API propia del formulario? | No. Sin formulario no hace falta |
 
 ---
 
@@ -677,10 +679,8 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 
 El sitio se puede publicar cuando **todos** estos puntos sean ciertos:
 
-- [ ] Todos los `RF` de prioridad **P0** están cerrados, o se ha decidido y anotado por qué no aplican.
-- [ ] Está resuelta la pregunta 11: hay una vía de petición de presupuesto, o consta la decisión de no tenerla.
+- [ ] Los `RF` **P0** que siguen vivos están cerrados: RF-05 (páginas legales) y RF-06 (dominio y despliegue). RF-01 a RF-04 están descartados.
 - [ ] No queda ni una foto de stock ni un testimonio inventado.
-- [ ] Si hay formulario, un envío real llega a la clienta en menos de 2 minutos, con adjuntos si los hubiera.
 - [ ] Lighthouse móvil: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO = 100.
 - [ ] Todo el sitio es recorrible solo con teclado.
 - [ ] Los enlaces `tel:`, `sms:` y de WhatsApp se han probado en un teléfono real, iOS y Android.
@@ -747,11 +747,16 @@ Commits en español, en imperativo. No mezclar requisitos en un mismo commit.
 el backend, y resolver de paso DT-05 y DT-06.
 
 **Cómo terminó.** Se descartó Web3Forms en favor de una API propia, y después se
-retiró el formulario entero, con lo que RF-01 a RF-04 quedaron en suspenso. Se
-cerraron DT-05 y DT-01, se añadió GSAP y se hicieron los cambios de contenido y
+retiró el formulario entero. La clienta confirmó que no quiere formulario ni
+newsletter, así que RF-01 a RF-04, RF-11 y RF-14 quedaron descartados. Se
+cerraron DT-01 y DT-05, se añadió GSAP y se hicieron los cambios de contenido y
 contacto que recoge la sección 3.6.
 
-**Siguiente encargo, cuando estén resueltas las preguntas 11 a 13** de la sección 9.
-Mientras tanto, trabajo que no depende de esas respuestas: DT-09 (borrar el CSS
-muerto), DT-10 (redimensionar el logo), DT-11 (quitar el vídeo sin uso) y RF-15
-(accesibilidad de modales y tarjetas de zona).
+**Siguiente encargo.** Por orden de rentabilidad:
+
+1. RF-18, la ficha de Google Business. No es código y es lo que más llamadas trae.
+   Ahora además es el principal canal de captación, porque la web no tiene ninguno propio.
+2. RF-08 y RF-07: testimonios y fotos reales. Bloquean la publicación.
+3. RF-05 y RF-06: páginas legales, dominio y despliegue. Los dos P0 que siguen vivos.
+4. Limpieza sin dependencias externas: DT-09 (CSS muerto), DT-10 (logo de 2 MB),
+   DT-11 (vídeo sin uso) y RF-15 (teclado en modales y tarjetas de zona).
