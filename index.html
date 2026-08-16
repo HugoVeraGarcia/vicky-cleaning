@@ -78,7 +78,7 @@ header.scrolled{top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(14px
 header.scrolled .logo{color:var(--ink)}
 .logo-mark{width:55px;height:55px;border-radius:17px;flex:none;background:linear-gradient(140deg,var(--brand-light),var(--brand));display:grid;place-items:center;box-shadow:0 8px 20px -8px rgba(245,179,1,.9);animation:sparkle 5s ease-in-out infinite}
 .logo-mark svg{width:31px;height:31px;fill:var(--ink)}
-.logo-mark img{width:31px;height:31px}
+.logo-mark img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
 @keyframes sparkle{0%,100%{transform:rotate(0) scale(1)}45%{transform:rotate(-7deg) scale(1.06)}62%{transform:rotate(3deg) scale(1.02)}}
 .lbl-lg{display:inline}.lbl-sm{display:none}
 .logo-txt b{display:block;font-size:1.06rem;font-weight:800;line-height:1.15;letter-spacing:-.02em;white-space:nowrap}
@@ -348,7 +348,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   .logo-txt i{display:none}
   .logo-mark{width:46px;height:46px;border-radius:13px}
   .logo-mark svg{width:26px;height:26px}
-  .logo-mark img{width:26px;height:26px}
   .logo{gap:9px}
   .topbar .wrap{justify-content:center}
   .topbar .hide-sm{display:none}
@@ -387,7 +386,7 @@ footer .logo{color:#fff;margin-bottom:14px}
   <div class="wrap nav">
     <a href="#" class="logo" aria-label="Vicky's Cleaning with a Smile and More, home">
       <span class="logo-mark">
-        <img src="images/bee-logo.png" alt="Vicky's Cleaning logo" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+        <img src="images/bee-logo.png" alt="Vicky's Cleaning logo">
       </span>
       <span class="logo-txt"><b>Vicky's Cleaning</b><i>with a smile and more</i></span>
     </a>
@@ -719,7 +718,7 @@ footer .logo{color:#fff;margin-bottom:14px}
     <div class="foot-grid">
       <div>
         <div class="logo">
-          <span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2l1.9 5.4L19.5 9l-5.6 1.6L12 16l-1.9-5.4L4.5 9l5.6-1.6L12 2zm6.5 11l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6zM5 14l.7 2 2 .7-2 .7L5 19.4l-.7-2-2-.7 2-.7L5 14z"/></svg></span>
+          <span class="logo-mark"><img src="images/bee-logo.png" alt="Vicky's Cleaning logo"></span>
           <span class="logo-txt"><b>Vicky's Cleaning</b><i>with a smile and more</i></span>
         </div>
         <p style="max-width:36ch">Family-owned cleaning company serving Southwest Florida since 2009. Licensed, insured and proud of it.</p>
