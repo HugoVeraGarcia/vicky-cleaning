@@ -70,8 +70,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 
 | Campo | Valor |
 |---|---|
-| Teléfono principal | `(239) 300-5332` → `tel:+12393005332` |
-| Teléfono secundario | `(239) 285-6103` → `tel:+12392856103` |
+| Teléfono | `+1 (239) 285-6103` → `tel:+12392856103` |
 | Correo | `Viky1912@hotmail.com` |
 | Dirección | `3845 Beck Blvd, Suite 828R, Naples, FL 34114` |
 | Horario | Monday – Saturday, 7:00 AM – 7:00 PM |
@@ -448,7 +447,7 @@ La clienta quiere saber si la web funciona. Hoy no hay nada instalado.
 
 ### RF-13 · Verificar el canal de WhatsApp — **P1**
 
-El botón apunta a `wa.me/12393005332`. Si ese número no está dado de alta en WhatsApp, el usuario recibe un error, que es peor que no tener el botón. En Estados Unidos el SMS es mucho más habitual.
+El botón apunta a `wa.me/12392856103`. Si ese número no está dado de alta en WhatsApp, el usuario recibe un error, que es peor que no tener el botón. En Estados Unidos el SMS es mucho más habitual.
 
 **Qué hacer**
 
@@ -593,7 +592,7 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 
 | # | Pregunta | Bloquea |
 |---|---|---|
-| 1 | ¿El (239) 300-5332 tiene WhatsApp dado de alta? | RF-13 |
+| 1 | ¿El +1 (239) 285-6103 tiene WhatsApp dado de alta? | RF-13 |
 | 2 | ¿Cuántas veces al año piensa editar la web ella misma? | F2-05, y el presupuesto |
 | 3 | Razón social exacta y datos fiscales para el aviso legal (la pregunta 8.1 quedó en blanco) | RF-05 |
 | 4 | En la pregunta 7.4 marcó a la vez "hay web anterior que sustituir" y "es nueva". ¿Existe una web antigua? ¿En qué dominio? | RF-06 — si hay dominio previo, hay que migrarlo y redirigir, no comprar uno nuevo |
