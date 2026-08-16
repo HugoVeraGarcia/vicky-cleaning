@@ -71,6 +71,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 | Campo | Valor |
 |---|---|
 | Teléfono | `+1 (239) 285-6103` → `tel:+12392856103` |
+| WhatsApp | `+1 (239) 285-6103` → `wa.me/12392856103` |
 | Correo | `Viky1912@hotmail.com` |
 | Dirección | `3845 Beck Blvd, Suite 828R, Naples, FL 34114` |
 | Horario | Monday – Saturday, 7:00 AM – 7:00 PM |
