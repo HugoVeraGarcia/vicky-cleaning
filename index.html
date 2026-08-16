@@ -960,27 +960,34 @@ if(typeof gsap !== 'undefined'){
 
 /* modals */
 var isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-var emailModal = document.createElement('div');
-emailModal.id = 'email-modal';
-emailModal.className = 'modal';
-emailModal.innerHTML = '<div class="modal-content"><span class="close">&times;</span><h3>Email</h3><div class="data">Viky1912@hotmail.com</div></div>';
-document.body.appendChild(emailModal);
-
-var phoneModal = document.createElement('div');
-phoneModal.id = 'phone-modal';
-phoneModal.className = 'modal';
-phoneModal.innerHTML = '<div class="modal-content"><span class="close">&times;</span><h3>Phone</h3><div class="data">+1 (239) 285-6103</div></div>';
-document.body.appendChild(phoneModal);
-
 if(!isMobile){
-  document.getElementById('email-btn').addEventListener('click', function(e){ e.preventDefault(); emailModal.classList.add('show'); });
-  document.getElementById('phone-btn').addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
+  var emailModal = document.getElementById('email-modal');
+  var phoneModal = document.getElementById('phone-modal');
+  if(emailModal && phoneModal){
+    document.getElementById('email-btn').addEventListener('click', function(e){ e.preventDefault(); emailModal.classList.add('show'); });
+    document.getElementById('phone-btn').addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
+    document.querySelectorAll('.modal .close').forEach(function(btn){ btn.addEventListener('click', function(){ this.closest('.modal').classList.remove('show'); }.bind(btn)); });
+    window.addEventListener('click', function(e){ if(e.target.classList.contains('modal')) e.target.classList.remove('show'); });
+  }
 }
-
-emailModal.querySelectorAll('.close').forEach(function(btn){ btn.addEventListener('click', function(){ emailModal.classList.remove('show'); }); });
-phoneModal.querySelectorAll('.close').forEach(function(btn){ btn.addEventListener('click', function(){ phoneModal.classList.remove('show'); }); });
-
-window.addEventListener('click', function(e){ if(e.target == emailModal) emailModal.classList.remove('show'); if(e.target == phoneModal) phoneModal.classList.remove('show'); });
 </script>
+
+<!-- Modals -->
+<div id="email-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Email</h3>
+    <div class="data">Viky1912@hotmail.com</div>
+  </div>
+</div>
+
+<div id="phone-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Phone</h3>
+    <div class="data">+1 (239) 285-6103</div>
+  </div>
+</div>
+
 </body>
 </html>
