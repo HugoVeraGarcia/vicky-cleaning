@@ -893,32 +893,6 @@ footer .logo{color:#fff;margin-bottom:14px}
     dio.observe(cmp);
   }
 
-  /* multi-step form */
-  var form=document.getElementById('qform');
-  var steps=form.querySelectorAll('.fstep');
-  var bars=form.querySelectorAll('.progress i');
-  function goTo(n){
-    steps.forEach(function(s){ s.classList.toggle('on', s.dataset.step===String(n)); });
-    bars.forEach(function(b,i){ b.classList.toggle('on', i<n); });
-    form.parentElement.scrollIntoView({behavior:'smooth',block:'center'});
-  }
-  form.querySelectorAll('[data-go]').forEach(function(b){
-    b.addEventListener('click',function(){ goTo(parseInt(b.dataset.go,10)); });
-  });
-  var uplin=document.getElementById('uplin'), upltxt=document.getElementById('upltxt');
-  uplin.addEventListener('change',function(){
-    var n=uplin.files.length;
-    upltxt.textContent = n ? '✓ '+n+' photo'+(n>1?'s':'')+' attached' : '📷 Tap to attach photos — this often lets us quote without a visit';
-  });
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(form.company_website.value) return;              /* honeypot: silent drop */
-    var req=form.querySelectorAll('.fstep[data-step="3"] [required]');
-    for(var i=0;i<req.length;i++){ if(!req[i].value.trim()){ req[i].focus(); req[i].style.borderColor='#E5484D'; return; } }
-    form.style.display='none';
-    document.getElementById('qok').classList.add('show');
-  });
-
   /* cookie notice */
   var ck=document.getElementById('cookie');
   function readCk(){ try{ return document.cookie.indexOf('vc_consent=')>-1; }catch(err){ return false; } }
@@ -926,12 +900,6 @@ footer .logo{color:#fff;margin-bottom:14px}
   if(!readCk()) setTimeout(function(){ ck.classList.add('show'); }, 1400);
   document.getElementById('ckYes').addEventListener('click',function(){ writeCk('all'); ck.classList.remove('show'); });
   document.getElementById('ckNo').addEventListener('click',function(){ writeCk('essential'); ck.classList.remove('show'); });
-
-  /* service card -> estimate */
-  document.querySelectorAll('.card').forEach(function(c){
-    c.style.cursor='pointer';
-    c.addEventListener('click',function(){ document.getElementById('estimate').scrollIntoView({behavior:'smooth'}); });
-  });
 
   /* area cards -> map */
   document.querySelectorAll('.area').forEach(function(a){
@@ -966,20 +934,32 @@ footer .logo{color:#fff;margin-bottom:14px}
 
   try{ document.getElementById('yr').textContent = new Date().getFullYear(); }catch(e){}
 
-  /* modals */
-  var isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  if(!isMobile){
-    var emailModal = document.getElementById('email-modal');
-    var phoneModal = document.getElementById('phone-modal');
-    if(emailModal && phoneModal){
-      document.getElementById('email-btn').addEventListener('click', function(){ emailModal.classList.add('show'); });
-      document.getElementById('phone-btn').addEventListener('click', function(){ phoneModal.classList.add('show'); });
-      var phoneFooter = document.getElementById('phone-footer');
-      if(phoneFooter) phoneFooter.addEventListener('click', function(e){ e.preventDefault(); phoneModal.classList.add('show'); });
-      document.querySelectorAll('.modal .close').forEach(function(btn){ btn.addEventListener('click', function(){ this.closest('.modal').classList.remove('show'); }.bind(btn)); });
-      window.addEventListener('click', function(e){ if(e.target.classList.contains('modal')) e.target.classList.remove('show'); });
-    }
+  /* contact modals: en móvil abre la app, en escritorio solo muestra el dato */
+  function onPhone(){
+    return window.matchMedia('(max-width:767px), (pointer:coarse)').matches;
   }
+  function openContact(modal, appUrl){
+    if(onPhone()){ window.location.href = appUrl; return; }
+    if(modal) modal.classList.add('show');
+  }
+  var emailModal=document.getElementById('email-modal'), phoneModal=document.getElementById('phone-modal');
+  var emailBtn=document.getElementById('email-btn'), phoneBtn=document.getElementById('phone-btn');
+  if(emailBtn) emailBtn.addEventListener('click',function(){ openContact(emailModal,'mailto:Viky1912@hotmail.com'); });
+  if(phoneBtn) phoneBtn.addEventListener('click',function(){ openContact(phoneModal,'tel:+12392856103'); });
+  var phoneFooter=document.getElementById('phone-footer');
+  if(phoneFooter) phoneFooter.addEventListener('click',function(e){
+    if(onPhone()) return;                                  /* deja que el enlace tel: abra la app */
+    e.preventDefault(); phoneModal.classList.add('show');
+  });
+  document.querySelectorAll('.modal .close').forEach(function(btn){
+    btn.addEventListener('click',function(){ btn.closest('.modal').classList.remove('show'); });
+  });
+  document.querySelectorAll('.modal').forEach(function(m){
+    m.addEventListener('click',function(e){ if(e.target===m) m.classList.remove('show'); });
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') document.querySelectorAll('.modal.show').forEach(function(m){ m.classList.remove('show'); });
+  });
 })();
 
 /* GSAP animations */
