@@ -265,7 +265,7 @@ esos canales y no dentro de la web. Ver la sección 8.
 | ~~DT-05~~ | ~~El año del pie sale de `document.lastModified`.~~ | **Resuelto.** Usa `new Date().getFullYear()`. |
 | ~~DT-06~~ | ~~El `<input type="file">` no tiene atributo `name`.~~ | **Sin objeto.** El formulario ya no existe. Tenerlo en cuenta al reconstruirlo. |
 | **DT-07** | El deslizador antes/después usa la misma foto con un filtro CSS para el "antes". | Es honesto como maqueta, pero engañoso en producción. Necesita un par real. |
-| **DT-08** | Los testimonios son inventados. | **No puede publicarse así.** Ver RF-08. |
+| ~~DT-08~~ | ~~Los testimonios son inventados.~~ | **Resuelto.** Sustituidos por cuatro mensajes reales de clientes. |
 | **DT-09** | Queda CSS de bloques ya borrados: `.form-*`, `.fstep`, `.progress`, `.chip*`, `.upload`, `.hp`, `.news`, `.hiring`. Unas 45 reglas sin ningún elemento que las use. | Peso muerto y ruido para quien lea el archivo. Se puede borrar sin efecto visible. |
 | **DT-10** | `images/bee-logo.png` pesa 2 MB y se muestra a 55 px. | Es la descarga más pesada del sitio. Bloquea el objetivo de rendimiento de RF-16. |
 | **DT-11** | `videos/vicky.mp4` sigue versionado pero ninguna página lo referencia. | Infla el repositorio sin aportar nada. Borrarlo o volver a usarlo. |
@@ -418,21 +418,22 @@ Las imágenes ya se sirven desde `images/` en lugar de Unsplash, lo que cierra D
 
 ---
 
-### RF-08 · Testimonios reales — **P1** *(bloqueante ético)*
+### RF-08 · Testimonios reales — **P1** *(hecho, con un fleco)*
 
-Los tres testimonios actuales están inventados. **No se puede publicar el sitio con ellos.**
+Los tres testimonios inventados se sustituyeron por **cuatro mensajes reales**, transcritos de capturas que aportó la clienta, manteniendo el formato de conversación.
 
-**Qué hacer**
+Se publican **sin nombre, sin inicial, sin ciudad y sin estrellas**. No se recibió ninguno de esos datos y no se inventan: eso era justamente el problema anterior. Las estrellas también desaparecieron, porque un mensaje de texto no lleva una valoración de cinco estrellas asociada.
 
-- Pedir a la clienta capturas de los mensajes reales de clientes.
-- Transcribirlos manteniendo el formato de conversación ya maquetado.
-- Usar nombre de pila e inicial del apellido. Pedir permiso.
-- Si no hay material suficiente, **eliminar la sección entera** hasta tenerlo. Una sección menos es mejor que testimonios falsos.
+**Fleco pendiente**
+
+- Aunque son anónimos, conviene que la clienta avise a esos clientes de que sus mensajes están publicados. Sin nombre el riesgo es bajo, pero es cortesía y evita sorpresas.
+- Uno de los mensajes menciona que la casa queda vacía hasta noviembre. Es anónimo, así que no es identificable, pero si prefiere no publicar esa parte, basta recortar esa frase.
 
 **Criterio de aceptación**
 
-- [ ] Cada testimonio corresponde a un mensaje real y verificable.
-- [ ] Hay constancia del permiso de cada persona citada.
+- [x] Cada testimonio corresponde a un mensaje real y verificable.
+- [x] No se atribuye a nadie un nombre ni una valoración que no haya dado.
+- [ ] La clienta ha avisado a las personas citadas.
 
 ---
 
@@ -661,7 +662,7 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 | 4 | En la pregunta 7.4 marcó a la vez "hay web anterior que sustituir" y "es nueva". ¿Existe una web antigua? ¿En qué dominio? | RF-06 — si hay dominio previo, hay que migrarlo y redirigir, no comprar uno nuevo |
 | 5 | El correo es un Hotmail. ¿Seguro que no quiere correo con dominio propio? Resta credibilidad en presupuestos a empresas y comunidades. | RF-06 |
 | 6 | Fotos reales del equipo y de trabajos, en alta resolución | RF-07, RF-10 |
-| 7 | Capturas de los mensajes de clientes y permiso para publicarlos | RF-08 |
+| 7 | Avisar a los clientes de que sus mensajes están publicados, aunque sea sin nombre | RF-08 — las capturas ya se recibieron |
 | 8 | Logo original, a poder ser vectorial | RF-09 |
 | 9 | ¿Confirma Bonita Springs, Immokalee y Lehigh Acres como zonas de servicio? Están en la marquesina pero no en su listado. | Sección 2.4 |
 | 10 | Presupuesto (respondió "por definir") y si acepta cuota mensual de mantenimiento | Alcance general |

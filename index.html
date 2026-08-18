@@ -190,16 +190,11 @@ header.scrolled .phone-link{color:var(--ink)}
 .map-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);font-size:.9rem;z-index:-1}
 
 /* testimonials as text messages */
-.msgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:46px}
+.msgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));gap:24px;margin-top:46px}
 .phone-card{background:#fff;border:1px solid var(--line-warm);border-radius:24px;padding:22px;box-shadow:var(--shadow);transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s}
 .phone-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
-.msg-head{display:flex;align-items:center;gap:11px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:16px}
-.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(140deg,var(--brand-light),var(--brand-dark));color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:.85rem;flex:none}
-.msg-head b{display:block;font-size:.93rem}
-.msg-head span{font-size:.78rem;color:var(--muted)}
 .bubble{background:var(--cream-2);border-radius:16px 16px 16px 5px;padding:13px 16px;font-size:.93rem;margin-bottom:9px;position:relative}
 .bubble.me{background:var(--ink);color:#fff;border-radius:16px 16px 5px 16px;margin-left:auto;max-width:82%}
-.stars{color:var(--brand-dark);letter-spacing:2px;font-size:.95rem;margin-top:12px}
 
 /* estimate form */
 .form-grid{display:grid;grid-template-columns:1fr 1.02fr;gap:52px;align-items:center;position:relative;z-index:2}
@@ -641,26 +636,24 @@ footer .logo{color:#fff;margin-bottom:14px}
     <div class="center">
       <span class="eyebrow eyebrow--soft reveal">What clients say</span>
       <h2 class="display reveal">Messages from our clients</h2>
-      <p class="lead reveal" data-d="1">Most of our new clients come from a neighbor's recommendation. These are the kinds of messages we receive after a visit.</p>
+      <p class="lead reveal" data-d="1">Most of our new clients come from a neighbor's recommendation. These are real messages we have received after a visit.</p>
     </div>
     <div class="msgs">
       <article class="phone-card reveal">
-        <div class="msg-head"><div class="avatar">CM</div><div><b>Carol M.</b><span>Naples · Biweekly home cleaning</span></div></div>
-        <div class="bubble">Hi Vicky! The house looks beautiful. The girls were so careful with my mother's china cabinet. Thank you 🙏</div>
-        <div class="bubble me">Thank you Carol! We will see you in two weeks 😊</div>
-        <div class="stars">★★★★★</div>
+        <div class="bubble">Thank you. They did an awesome job today. Very much appreciated</div>
+        <div class="bubble me">Thank you very much for your comments</div>
       </article>
       <article class="phone-card reveal" data-d="1">
-        <div class="msg-head"><div class="avatar">JT</div><div><b>James T.</b><span>Marco Island · Vacation rental turnovers</span></div></div>
-        <div class="bubble">Guests just checked in and left a five star review mentioning how clean the place was. Same day turnaround again — you saved me.</div>
-        <div class="bubble me">Happy to help, James. We will keep the same window for next weekend.</div>
-        <div class="stars">★★★★★</div>
+        <div class="bubble">Just wanted to let you know that the gals today did an EXCELLENT job. It's always good but they were great. Send them again any time!!!</div>
+        <div class="bubble me">Yes, I will! Thank you so much!</div>
       </article>
       <article class="phone-card reveal" data-d="2">
-        <div class="msg-head"><div class="avatar">LR</div><div><b>Linda R.</b><span>Fort Myers · Move-out cleaning</span></div></div>
-        <div class="bubble">The property manager said it was the cleanest move-out she had seen this year. We got the full deposit back. Thank you so much!</div>
-        <div class="bubble me">That is wonderful news, Linda. Congratulations on the new home!</div>
-        <div class="stars">★★★★★</div>
+        <div class="bubble">Another excellent job by your team! Thank you from my heart.</div>
+        <div class="bubble me">Thank you so much</div>
+      </article>
+      <article class="phone-card reveal" data-d="3">
+        <div class="bubble">Thank you so much for your excellent services. We leave for Massachusetts on Saturday and return in November. Have a good summer.</div>
+        <div class="bubble me">Thank you so much! Have a great and safe summer and we will see you next season!</div>
       </article>
     </div>
   </div>
