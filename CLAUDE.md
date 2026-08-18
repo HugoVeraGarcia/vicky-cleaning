@@ -6,10 +6,11 @@ antes de tocar nada; los datos del negocio de su sección 2 son la fuente de ver
 
 ## Reglas duras
 
-- HTML, CSS y JS planos. Un solo archivo `index.html`. Sin build, sin frameworks,
-  sin Tailwind, sin bundler.
-- El CSS va en el `<style>` del propio archivo. El JS, en el `<script>` del final,
-  dentro del IIFE que ya existe.
+- HTML, CSS y JS planos. Sin build, sin frameworks, sin Tailwind, sin bundler.
+- La página principal es un solo archivo, `index.html`. Aparte están las tres
+  páginas legales, cada una autocontenida con su propio `<style>` reducido.
+- Cada archivo lleva su CSS en el `<style>` propio; nada de hojas externas. En
+  `index.html`, el JS va en el `<script>` del final, dentro del IIFE que ya existe.
 - Nada de `localStorage` ni `sessionStorage`. Solo cookies con try/catch.
 - Todo el texto visible, en inglés. Comentarios y commits, en español.
 - Nunca añadir precios al sitio. Es una decisión cerrada de la clienta.

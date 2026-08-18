@@ -64,6 +64,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 
 | Campo | Valor |
 |---|---|
+| Razón social | `Vicky's Cleaning with a Smile and More` — coincide con el nombre comercial |
 | Nombre comercial | `Vicky's Cleaning with a Smile and More` |
 | Persona de contacto | Vicky Reyes |
 | Año de fundación | 2009 (17 años en 2026) |
@@ -118,7 +119,9 @@ Todas en Collier, Lee y Charlotte County. La marquesina incluye además tres zon
 
 ### 3.1 Qué hay
 
-Un único archivo `index.html` (~64 KB, ~970 líneas) autocontenido: HTML + CSS en `<style>` + JS en `<script>`. Sin build ni `node_modules`. Junto a él, una carpeta `images/` con las fotografías servidas desde el propio dominio y `videos/`, hoy sin uso en la página.
+La página principal es un único archivo `index.html` (~64 KB, ~970 líneas) autocontenido: HTML + CSS en `<style>` + JS en `<script>`. Sin build ni `node_modules`. Junto a él, una carpeta `images/` con las fotografías servidas desde el propio dominio y `videos/`, hoy sin uso en la página.
+
+Desde agosto de 2026 el sitio **ya no es de una sola página**: hay tres páginas legales (`privacy.html`, `terms.html`, `accessibility.html`), cada una autocontenida con su propio `<style>` reducido. Ver RF-05.
 
 Única dependencia en tiempo de ejecución además de las fuentes: **GSAP 3.12.2** por CDN, usada solo para la animación de las tarjetas al pasar el cursor.
 
@@ -361,20 +364,22 @@ El diseño incluía un honeypot (`company_website`), que frena bots básicos. No
 
 ---
 
-### RF-05 · Páginas legales — **P0**
+### RF-05 · Páginas legales — **P0** *(hecho, pendiente de revisión jurídica)*
 
-Los tres enlaces del pie (`Privacy Policy`, `Terms of Service`, `Accessibility`) apuntan a `#`.
+Creadas `privacy.html`, `terms.html` y `accessibility.html`. Los tres enlaces del pie de `index.html` ya apuntan a ellas, y las tres enlazan entre sí y de vuelta a la principal.
 
-**Qué hacer**
+**Cómo se resolvió**
 
-- Crear `privacy.html`, `terms.html` y `accessibility.html` con la misma cabecera y pie que la principal.
-- La política de privacidad debe cubrir el formulario, el correo, la analítica y las cookies.
-- No aplica el RGPD (empresa y clientes en Florida), pero sí conviene una política de privacidad real por el formulario y por si se hace publicidad en Google o Meta.
+- **No replican la cabecera y el pie de la principal**, como decía el plan original. Sin sistema de compilación eso obligaba a duplicar 350 líneas de CSS en cada archivo, con cuatro copias que mantener sincronizadas. En su lugar son autocontenidas, con unas 40 reglas propias, los mismos tokens de color y las mismas tipografías, cabecera simple con logo y enlace de vuelta.
+- La política de privacidad **describe lo que el sitio hace de verdad**, no un texto genérico: la cookie `vc_consent` y su duración, los tres terceros que se cargan (Google Maps, Google Fonts y el CDN de GSAP), y que hoy no hay formulario ni analítica. Si se añade GA4 (RF-12) hay que actualizarla.
+- La declaración de accesibilidad **reconoce las carencias reales** de RF-15 en vez de afirmar conformidad total: el deslizador solo funciona arrastrando, las tarjetas de zona no son accesibles por teclado, los modales no mueven el foco y el contraste del amarillo no está auditado. Declarar una conformidad que no se tiene es peor que reconocerla.
+- No llevan `<link rel="canonical">`, a la espera de resolver DT-12.
 
 **Criterio de aceptación**
 
-- [ ] Los tres enlaces resuelven a páginas con contenido real.
-- [ ] La política menciona explícitamente qué datos recoge el formulario y para qué.
+- [x] Los tres enlaces resuelven a páginas con contenido real.
+- [x] La política menciona explícitamente qué datos se recogen y para qué.
+- [ ] **Alguien cualificado ha revisado los tres textos.** Están redactados a partir del comportamiento real del sitio y de los datos de la sección 2, pero no son asesoramiento jurídico.
 
 ---
 
@@ -658,7 +663,7 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 |---|---|---|
 | 1 | ¿El +1 (239) 285-6103 tiene WhatsApp dado de alta? | RF-13 |
 | 2 | ¿Cuántas veces al año piensa editar la web ella misma? | F2-05, y el presupuesto |
-| 3 | Razón social exacta y datos fiscales para el aviso legal (la pregunta 8.1 quedó en blanco) | RF-05 |
+| 3 | Que alguien cualificado revise los tres textos legales antes de publicar | RF-05 — la razón social ya se recibió: `Vicky's Cleaning` |
 | 4 | En la pregunta 7.4 marcó a la vez "hay web anterior que sustituir" y "es nueva". ¿Existe una web antigua? ¿En qué dominio? | RF-06 — si hay dominio previo, hay que migrarlo y redirigir, no comprar uno nuevo |
 | 5 | El correo es un Hotmail. ¿Seguro que no quiere correo con dominio propio? Resta credibilidad en presupuestos a empresas y comunidades. | RF-06 |
 | 6 | Fotos reales del equipo y de trabajos, en alta resolución | RF-07, RF-10 |
@@ -708,10 +713,11 @@ antes de tocar nada; los datos del negocio de su sección 2 son la fuente de ver
 
 ## Reglas duras
 
-- HTML, CSS y JS planos. Un solo archivo `index.html`. Sin build, sin frameworks,
-  sin Tailwind, sin bundler.
-- El CSS va en el `<style>` del propio archivo. El JS, en el `<script>` del final,
-  dentro del IIFE que ya existe.
+- HTML, CSS y JS planos. Sin build, sin frameworks, sin Tailwind, sin bundler.
+- La página principal es un solo archivo, `index.html`. Aparte están las tres
+  páginas legales, cada una autocontenida con su propio `<style>` reducido.
+- Cada archivo lleva su CSS en el `<style>` propio; nada de hojas externas. En
+  `index.html`, el JS va en el `<script>` del final, dentro del IIFE que ya existe.
 - Nada de `localStorage` ni `sessionStorage`. Solo cookies con try/catch.
 - Todo el texto visible, en inglés. Comentarios y commits, en español.
 - Nunca añadir precios al sitio. Es una decisión cerrada de la clienta.
