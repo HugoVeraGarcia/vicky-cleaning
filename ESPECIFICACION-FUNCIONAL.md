@@ -82,6 +82,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 | Correo | `Viky1912@hotmail.com` |
 | Dirección | `3845 Beck Blvd, Suite 828R, Naples, FL 34114` |
 | Horario | Monday – Saturday, 7:00 AM – 7:00 PM |
+| Dominio | `www.vickycleaningnaples.com` — sin la `s` de "Vicky's". Pendiente de contratar |
 | TikTok | `https://www.tiktok.com/@vickyscleaning239` |
 
 > ⚠️ El correo es **`Viky1912`** con una sola `k`, no `Vicky`. Es correcto tal cual. No lo "arregles".
@@ -272,7 +273,7 @@ esos canales y no dentro de la web. Ver la sección 8.
 | **DT-09** | Queda CSS de bloques ya borrados: `.form-*`, `.fstep`, `.progress`, `.chip*`, `.upload`, `.hp`, `.news`, `.hiring`. Unas 45 reglas sin ningún elemento que las use. | Peso muerto y ruido para quien lea el archivo. Se puede borrar sin efecto visible. |
 | **DT-10** | `images/bee-logo.png` pesa 2 MB y se muestra a 55 px. | Es la descarga más pesada del sitio. Bloquea el objetivo de rendimiento de RF-16. |
 | **DT-11** | `videos/vicky.mp4` sigue versionado pero ninguna página lo referencia. | Infla el repositorio sin aportar nada. Borrarlo o volver a usarlo. |
-| **DT-12** | El `<link rel="canonical">` apunta a `https://www.vickyscleaning.com/`, dominio aún no contratado. | Si se publica en otro dominio, se le indica a Google que la página buena es otra. Ver RF-06 y RF-17. |
+| ~~DT-12~~ | ~~El `canonical` apunta a un dominio no contratado.~~ | **Resuelto.** Las cuatro páginas apuntan a `www.vickycleaningnaples.com`. `vickyscleaning.com` estaba registrado por un tercero. |
 
 ---
 
@@ -572,20 +573,28 @@ El sitio parte de una base razonable (enlace de salto, `aria-label` en los icono
 
 ---
 
-### RF-17 · SEO técnico y local — **P1**
+### RF-17 · SEO técnico y local — **P1** *(casi cerrado)*
 
-Ya existe el JSON-LD `HouseholdCleaningService` con las 7 ciudades, el horario, la dirección y el catálogo de servicios. Falta el resto.
+**Hecho**
 
-**Qué hacer**
+- `robots.txt` y `sitemap.xml` con las cuatro páginas y sus fechas reales de modificación.
+- `canonical` correcto en las cuatro páginas, apuntando a `www.vickycleaningnaples.com`.
+- `og:url` añadido.
+- `title` y `meta description` únicos en cada página.
+- JSON-LD `HouseholdCleaningService` con las 7 ciudades, horario, dirección y catálogo de 8 servicios.
 
-- `sitemap.xml` y `robots.txt`.
-- Revisar que `<title>` y `<meta description>` de cada página nueva sean únicos.
-- Añadir `og:image` (RF-09) y `twitter:card`.
-- Corregir el `<link rel="canonical">`, que hoy apunta a un dominio de ejemplo.
-- Cuando exista la ficha de Google Business, añadir `sameAs` con su URL.
+**Pendiente**
+
+- `og:image` de 1200×630 y `twitter:card` (depende de RF-09).
+- Añadir `geo`, `url`, `image` y `priceRange` al JSON-LD. `priceRange` admite `$$` sin publicar precios, así que no contradice la decisión cerrada.
+- Cuando exista la ficha de Google Business, añadir su URL a `sameAs`.
+- Enviar el sitemap en Search Console tras el despliegue.
+
+> ⚠️ El `canonical` declara **con `www`**. El dominio principal que se configure en el alojamiento tiene que ser el mismo, o el canónico y la redirección se contradicen. Si se prefiere el dominio sin `www`, hay que cambiar los cuatro `canonical`, el `og:url`, el `sitemap.xml` y la línea `Sitemap:` del `robots.txt`.
 
 **Criterio de aceptación**
 
+- [x] Los `canonical` apuntan al dominio real.
 - [ ] El JSON-LD pasa el validador de resultados enriquecidos de Google sin errores.
 - [ ] Search Console indexa la página principal sin avisos.
 
