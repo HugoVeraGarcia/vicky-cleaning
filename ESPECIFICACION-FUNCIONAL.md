@@ -82,7 +82,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 | Correo | `Viky1912@hotmail.com` |
 | Dirección | `3845 Beck Blvd, Suite 828R, Naples, FL 34114` |
 | Horario | Monday – Saturday, 7:00 AM – 7:00 PM |
-| Dominio | `www.vickycleaningnaples.com` — sin la `s` de "Vicky's". Pendiente de contratar |
+| Dominio | `vickycleaningnaples.com` — sin la `s` de "Vicky's". Pendiente de contratar |
 | TikTok | `https://www.tiktok.com/@vickyscleaning239` |
 
 > ⚠️ El correo es **`Viky1912`** con una sola `k`, no `Vicky`. Es correcto tal cual. No lo "arregles".
@@ -124,7 +124,9 @@ La página principal es un único archivo `index.html` (~64 KB, ~970 líneas) au
 
 Desde agosto de 2026 el sitio **ya no es de una sola página**: hay tres páginas legales (`privacy.html`, `terms.html`, `accessibility.html`), cada una autocontenida con su propio `<style>` reducido. Ver RF-05.
 
-Única dependencia en tiempo de ejecución además de las fuentes: **GSAP 3.12.2** por CDN, usada solo para la animación de las tarjetas al pasar el cursor.
+Hay además un archivo de JavaScript compartido, `js/analytics.js`, que cargan las cuatro páginas. Es el único JS externo del proyecto: todo lo demás sigue inline.
+
+Dependencias en tiempo de ejecución, además de las fuentes: **GSAP 3.12.2** por CDN, para la animación de las tarjetas al pasar el cursor, y **Google Analytics 4** (`G-R9ZDYFP6ZK`) en las cuatro páginas.
 
 ### 3.2 Estructura del documento, en orden
 
@@ -147,7 +149,7 @@ Desde agosto de 2026 el sitio **ya no es de una sola página**: hay tres página
 | 15 | Pie | `footer` | 4 columnas. Sin newsletter ni franja de empleo |
 | 16 | Modales de contacto | `#email-modal`, `#phone-modal` | Ocultos. Muestran correo y teléfono en grande |
 | 17 | Botones flotantes | `#fabs` | WhatsApp siempre; *Text us* solo en móvil (`.mobile-only`). Aparecen a > 520px |
-| 18 | Cookies | `#cookie` | Banner, cookie `vc_consent` |
+| 18 | Aviso de cookies | `#cookie` | Informativo, un solo boton. Cookie `vc_consent=acknowledged` |
 | 19 | JSON-LD | — | `HouseholdCleaningService` |
 
 **Retirado:** la sección de formulario `#estimate` (`#qform` / `#qok`), que ocupaba la
@@ -185,7 +187,7 @@ Un IIFE con todo el comportamiento, más un bloque suelto al final para GSAP. Bl
 - Contadores animados
 - Inyección de la marquesina
 - Deslizador antes/después (pointer events + auto-demo al entrar en viewport)
-- Banner de cookies (`document.cookie`, clave `vc_consent`)
+- Aviso de cookies (`document.cookie`, clave `vc_consent`). No condiciona nada: solo recuerda que ya se vio
 - Click en tarjeta de zona → recarga el iframe del mapa en esa ciudad y la marca `.active`
 - Brillo del botón siguiendo el cursor
 - Fallback si una imagen falla
@@ -265,7 +267,7 @@ esos canales y no dentro de la web. Ver la sección 8.
 | ~~DT-01~~ | ~~Las imágenes se cargan por *hotlink* desde `images.unsplash.com`.~~ | **Resuelto.** Las 14 imágenes se sirven desde `images/`. Falta convertirlas a WebP/AVIF y darles `width`/`height` (RF-07). |
 | **DT-02** | Fuentes cargadas desde `fonts.googleapis.com` con `<link>` bloqueante. | Penaliza LCP y añade una petición a un tercero antes del consentimiento de cookies. |
 | **DT-03** | El `<iframe>` de Google Maps se carga siempre, **antes** de que el usuario acepte cookies. | Carga scripts de terceros sin consentimiento y pesa en el rendimiento. |
-| **DT-04** | El banner de cookies guarda la preferencia pero **no condiciona nada**: no hay ningún script que dependa de ella. | En cuanto se añada GA4 (RF-12) hay que respetar `vc_consent`, o el banner es decorativo. |
+| ~~DT-04~~ | ~~El banner guarda la preferencia pero no condiciona nada.~~ | **Cerrado por decisión, no por implementación.** El banner dejó de ofrecer una elección y pasó a ser un aviso informativo con un solo botón. Ya no promete nada que no cumpla. Ver sección 8. |
 | ~~DT-05~~ | ~~El año del pie sale de `document.lastModified`.~~ | **Resuelto.** Usa `new Date().getFullYear()`. |
 | ~~DT-06~~ | ~~El `<input type="file">` no tiene atributo `name`.~~ | **Sin objeto.** El formulario ya no existe. Tenerlo en cuenta al reconstruirlo. |
 | **DT-07** | El deslizador antes/después usa la misma foto con un filtro CSS para el "antes". | Es honesto como maqueta, pero engañoso en producción. Necesita un par real. |
@@ -273,7 +275,7 @@ esos canales y no dentro de la web. Ver la sección 8.
 | **DT-09** | Queda CSS de bloques ya borrados: `.form-*`, `.fstep`, `.progress`, `.chip*`, `.upload`, `.hp`, `.news`, `.hiring`. Unas 45 reglas sin ningún elemento que las use. | Peso muerto y ruido para quien lea el archivo. Se puede borrar sin efecto visible. |
 | **DT-10** | `images/bee-logo.png` pesa 2 MB y se muestra a 55 px. | Es la descarga más pesada del sitio. Bloquea el objetivo de rendimiento de RF-16. |
 | **DT-11** | `videos/vicky.mp4` sigue versionado pero ninguna página lo referencia. | Infla el repositorio sin aportar nada. Borrarlo o volver a usarlo. |
-| ~~DT-12~~ | ~~El `canonical` apunta a un dominio no contratado.~~ | **Resuelto.** Las cuatro páginas apuntan a `www.vickycleaningnaples.com`. `vickyscleaning.com` estaba registrado por un tercero. |
+| ~~DT-12~~ | ~~El `canonical` apunta a un dominio no contratado.~~ | **Resuelto.** Las cuatro páginas apuntan a `vickycleaningnaples.com`. `vickyscleaning.com` estaba registrado por un tercero. |
 
 ---
 
@@ -494,21 +496,28 @@ Las tarjetas de servicio ya no son pulsables: se retiró el manejador que bajaba
 
 ---
 
-### RF-12 · Analítica y medición — **P1**
+### RF-12 · Analítica y medición — **P1** *(instalado, pendiente de configurar en GA4)*
 
-La clienta quiere saber si la web funciona. Hoy no hay nada instalado.
+**Hecho**
 
-**Qué hacer**
+- Google Analytics 4 instalado en las cuatro páginas. ID de medición `G-R9ZDYFP6ZK`.
+- `js/analytics.js` registra cuatro eventos con delegación en `document`: `click_telefono`, `click_sms`, `click_correo` y `click_whatsapp`. Cada uno envía `destino`, `ubicacion` y `pagina`.
+- Los 16 enlaces de contacto llevan `data-ubicacion`: `header`, `footer`, `boton-flotante`, `seccion-servicios`, `seccion-faq` y `pagina-legal`.
+- Retención de datos subida a 14 meses en la interfaz de GA4.
+- **Carga sin condicionar al consentimiento.** Decisión de la clienta, ver sección 8.
 
-- Instalar Google Analytics 4, **condicionado al consentimiento de cookies** (resuelve DT-04).
-- Registrar como eventos: clic en cualquier `tel:`, clic en el botón de WhatsApp, clic en `sms:`, apertura de los modales de contacto de escritorio y clic en una tarjeta de zona. Cuando vuelva el formulario, añadir avance de paso y envío completado.
-- Dar de alta Search Console y enviar el sitemap (RF-19).
+**Pendiente**
+
+- Marcar los cuatro eventos como *key events* en GA4. Hasta que no se haga, no cuentan como conversiones y el informe no dirá cuántos contactos genera la web.
+- Verificar en DebugView que los eventos llegan de verdad. Lo probado hasta ahora es que el código los dispara, no que Google los reciba.
+- Dar de alta Search Console y enviar el `sitemap.xml`.
 - No instalar píxeles publicitarios todavía: la clienta dijo que la publicidad de pago va "más adelante".
 
 **Criterio de aceptación**
 
-- [ ] Con las cookies rechazadas, no se carga ningún script de GA4.
-- [ ] En GA4 se distinguen llamadas, mensajes y WhatsApp como eventos separados.
+- [x] La política de privacidad describe con exactitud qué recoge la analítica y cómo excluirse.
+- [ ] En GA4 se distinguen llamadas, mensajes, WhatsApp y correo como eventos separados.
+- [ ] Los cuatro eventos están marcados como *key events*.
 
 ---
 
@@ -578,7 +587,7 @@ El sitio parte de una base razonable (enlace de salto, `aria-label` en los icono
 **Hecho**
 
 - `robots.txt` y `sitemap.xml` con las cuatro páginas y sus fechas reales de modificación.
-- `canonical` correcto en las cuatro páginas, apuntando a `www.vickycleaningnaples.com`.
+- `canonical` correcto en las cuatro páginas, apuntando a `vickycleaningnaples.com`.
 - `og:url` añadido.
 - `title` y `meta description` únicos en cada página.
 - JSON-LD `HouseholdCleaningService` con las 7 ciudades, horario, dirección y catálogo de 8 servicios.
@@ -590,7 +599,7 @@ El sitio parte de una base razonable (enlace de salto, `aria-label` en los icono
 - Cuando exista la ficha de Google Business, añadir su URL a `sameAs`.
 - Enviar el sitemap en Search Console tras el despliegue.
 
-> ⚠️ El `canonical` declara **con `www`**. El dominio principal que se configure en el alojamiento tiene que ser el mismo, o el canónico y la redirección se contradicen. Si se prefiere el dominio sin `www`, hay que cambiar los cuatro `canonical`, el `og:url`, el `sitemap.xml` y la línea `Sitemap:` del `robots.txt`.
+> ⚠️ El `canonical` declara el dominio **sin `www`**. El dominio principal que se configure en el alojamiento tiene que ser el mismo, o el canónico y la redirección se contradicen.
 
 **Criterio de aceptación**
 
@@ -661,6 +670,7 @@ Añadidas en agosto de 2026, a petición de la clienta:
 - ❌ **Sin sección de vídeo.** Se probó con el vídeo de TikTok y se descartó.
 - ✅ **El botón *Text us* es solo para móvil.** En escritorio un enlace `sms:` no lleva a ninguna parte útil.
 - ✅ **En escritorio, correo y teléfono se muestran en un modal** para copiarlos, en vez de lanzar una aplicación que el usuario quizá no tenga configurada.
+- ✅ **La analítica no se condiciona al consentimiento.** GA4 carga siempre. A cambio, el banner dejó de ofrecer una elección: es un aviso informativo con un solo botón, y la política de privacidad declara con detalle qué se recoge y cómo excluirse. Se descartó condicionar la carga porque habría perdido los datos de quien ignora el banner, que es justo lo que RF-12 quiere medir. Empresa y clientela están en Florida, así que no aplica el RGPD.
 
 ---
 
