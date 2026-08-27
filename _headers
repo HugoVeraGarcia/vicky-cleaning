@@ -1,0 +1,4 @@
+# Sin este tipo MIME, algunos navegadores muestran el .vcf como texto
+# en lugar de ofrecer guardar el contacto.
+/vcard/vickys-cleaning.vcf
+  Content-Type: text/vcard; charset=utf-8
