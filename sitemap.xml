@@ -2,22 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vickycleaningnaples.com/</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://vickycleaningnaples.com/vcard/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://vickycleaningnaples.com/privacy.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://vickycleaningnaples.com/terms.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://vickycleaningnaples.com/accessibility.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.3</priority>
   </url>
 </urlset>
