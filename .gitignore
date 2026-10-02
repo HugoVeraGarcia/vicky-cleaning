@@ -22,3 +22,7 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Imagenes de trabajo que no se publican. Un binario commiteado se queda en el
+# historial aunque se borre despues, asi que no entran hasta estar optimizadas.
+images/bee-logo2.png
