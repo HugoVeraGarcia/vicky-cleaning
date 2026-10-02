@@ -82,7 +82,7 @@ Las cuatro objeciones que la clienta escucha antes de contratar, y que la web de
 | Correo | `Viky1912@hotmail.com` |
 | Dirección | `3845 Beck Blvd, Suite 828R, Naples, FL 34114` |
 | Horario | Monday – Saturday, 7:00 AM – 7:00 PM |
-| Dominio | `vickycleaningnaples.com` — sin la `s` de "Vicky's". Pendiente de contratar |
+| Dominio | `https://vickycleaningnaples.com/` — sin la `s` de "Vicky's". Contratado y publicado. La variante con `www` redirige al dominio sin `www` |
 | TikTok | `https://www.tiktok.com/@vickyscleaning239` |
 
 > ⚠️ El correo es **`Viky1912`** con una sola `k`, no `Vicky`. Es correcto tal cual. No lo "arregles".
