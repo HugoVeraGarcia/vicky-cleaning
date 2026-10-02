@@ -613,11 +613,38 @@ El sitio parte de una base razonable (enlace de salto, `aria-label` en los icono
 
 La clienta no tiene ficha verificada. Para una empresa de limpieza local en Naples, la ficha suele generar más llamadas que la propia web. Hoy consigue clientes por boca a boca y por los rótulos de los vehículos; la ficha de Google es la extensión natural de eso.
 
-**Qué hacer**
+**Estado a 2 de octubre de 2026**
 
-- Crear y verificar la ficha con el NAP exacto de la sección 2.2 — cualquier variación en nombre, dirección o teléfono entre la ficha y la web perjudica el posicionamiento local.
-- Subir fotos, servicios y zonas.
-- Poner en marcha una rutina para pedir reseñas a los clientes recurrentes.
+Ficha creada y configurada como **negocio de zona de servicio**, con dirección oculta y las 7 ciudades. Está **pendiente de verificación** y no es visible al público. Vive en la cuenta `gauss.publisher@gmail.com`.
+
+Qué se ha intentado, y por qué falló:
+
+- **Verificación por vídeo**, varios intentos, todos rechazados. Google ya no ofrece ningún método automático: *"No more ways to verify"*.
+- La causa más probable no es el vídeo: hay **dos fichas antiguas publicadas en Maps** —"Vicky Cleaning and Handyman Services" (3,9) y "Vickys Cleaning & handyman service" (3,6)— y **ambas llevan el teléfono principal del negocio**, el (239) 285-6103. Google detecta duplicado.
+- Las antiguas las controla un ex trabajador que nadie identifica. **Se intentó reclamar la propiedad y falló**, porque la empresa ya no está en aquella dirección.
+
+Decisión tomada: quedarse con la ficha nueva y abrir caso de soporte para revisión manual.
+
+**Expediente documental reunido**
+
+| Documento | Acredita | Carencia |
+|---|---|---|
+| Sunbiz | `VICKYS CLEANING WITH A SMILE & MORE CORP`, doc. P11000008519, ACTIVE, presidente Isidro Vizueth | Dirección registrada: 2602 18th Ave Ne, no Beck Blvd |
+| Contrato de alquiler | Unidad **828R**, 3845 Beck Blvd, 1.000 sq ft, plazo 01/12/2025–30/11/2026, uso "office and parking" | **Sin firmar** |
+| Estado de cuenta | Unidad 828R, pagos, 6 vehículos aparcados allí | Es foto de una pantalla |
+| Recibo de alquiler | PDF limpio, 12/08/2026, correo `viky1912@hotmail.com` coincide con la web | No menciona la unidad |
+
+Entre los cuatro, cada carencia la cubre otro. Una carta de verificación de arrendamiento del propietario (Toll Gate Naples LLC, `jackielarson@comcast.net`) lo resolvería todo en un documento, pero se descartó pedir más.
+
+**Pendiente**
+
+- Abrir el caso en `support.google.com/business/gethelp` con la categoría *"No way to verify is offered"*. Las respuestas llegan a `gauss.publisher@gmail.com`.
+- Una vez verificada: corregir el teléfono de la ficha, que hoy es el **secundario** (239) 300-5332 en lugar del principal (239) 285-6103 de la web.
+- Afinar la categoría principal: hoy es "Cleaners"; "House cleaning service" describe mejor el servicio prioritario.
+- Añadir la URL de la ficha al `sameAs` del JSON-LD (RF-17).
+- Decidir qué hacer con las dos fichas antiguas: sugerir edición como "cerrado permanentemente" —no requiere ser propietario— o el formulario de reclamación de perfiles.
+- Fotos reales, no de archivo: subir stock a Google Business incumple sus normas.
+- Rutina para pedir reseñas a clientes recurrentes.
 - Solo cuando haya reseñas, añadir el sello o el enlace en el pie.
 
 **Criterio de aceptación**
@@ -690,6 +717,7 @@ Bloquean requisitos concretos. Conviene resolverlas todas en una sola conversaci
 | 8 | Logo original, a poder ser vectorial | RF-09 |
 | 9 | ¿Confirma Bonita Springs, Immokalee y Lehigh Acres como zonas de servicio? Están en la marquesina pero no en su listado. | Sección 2.4 |
 | 10 | Presupuesto (respondió "por definir") y si acepta cuota mensual de mantenimiento | Alcance general |
+| 11 | **¿El año de fundación es 2009 o 2011?** Sunbiz registra la constitución el 25/01/2011, pero la web dice "since 2009" y repite "17 years" en cinco sitios, y el JSON-LD declara `foundingDate: 2009`. Pudo operar antes de constituirse como sociedad, pero hay que confirmarlo | Sección 2.1, y el texto de `index.html` |
 
 Resueltas en agosto de 2026, recogidas ya en la sección 8:
 
